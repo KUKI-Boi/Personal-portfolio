@@ -124,14 +124,16 @@ export default function Desktop() {
 
                 {/* Profile Focal Point */}
                 <div className="profile-focal text-center space-y-8 mb-16 select-none cursor-default max-w-3xl">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-gradient pb-2 drop-shadow-2xl">
                             Likith Kumar B M
                         </h1>
-                        <p className="text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-primary/80 flex items-center justify-center gap-4">
-                            <span className="w-12 h-px bg-primary/30" />
-                            Frontend Developer | Electronics Learner
-                            <span className="w-12 h-px bg-primary/30" />
+                        <p className="text-sm md:text-lg font-bold tracking-[0.3em] uppercase text-primary/80 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+                            <span>Frontend Developer</span>
+                            <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-primary/30" />
+                            <span>UI/UX Enthusiast</span>
+                            <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-primary/30" />
+                            <span>Electronics & Embedded Systems Learner</span>
                         </p>
                     </div>
 
@@ -139,10 +141,19 @@ export default function Desktop() {
                         "I build clean, responsive user interfaces and work on practical engineering projects that bridge software, hardware, and real-world impact."
                     </p>
 
-                    <div className="pt-4">
+                    <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">
+                        <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
+                            <span className="text-primary truncate">Location:</span> India
+                        </div>
+                        <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
+                            <span className="text-primary">Email:</span> placeholder
+                        </div>
+                    </div>
+
+                    <div className="pt-6 flex flex-col items-center gap-4">
                         <button
                             onClick={() => openApp("about")}
-                            className="group flex items-center gap-3 mx-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/50 rounded-full transition-all duration-300 text-zinc-100 font-bold tracking-widest uppercase text-xs"
+                            className="group flex items-center gap-3 px-10 py-5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/50 rounded-full transition-all duration-300 text-zinc-100 font-bold tracking-widest uppercase text-xs shadow-2xl"
                         >
                             Start Exploring <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform text-primary" />
                         </button>

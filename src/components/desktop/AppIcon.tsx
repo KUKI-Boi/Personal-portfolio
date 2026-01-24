@@ -31,7 +31,7 @@ export default function AppIcon({ label, icon, onClick }: AppIconProps) {
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
             </div>
 
-            <span className="text-[11px] font-bold text-zinc-500 group-hover:text-zinc-100 uppercase tracking-[0.2em] transition-all duration-300 text-center w-full">
+            <span className="text-[12px] font-black text-zinc-400 group-hover:text-white uppercase tracking-[0.2em] transition-all duration-300 text-center w-full">
                 {label}
             </span>
         </button>
