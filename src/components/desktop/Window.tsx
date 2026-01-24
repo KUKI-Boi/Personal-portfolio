@@ -40,14 +40,21 @@ export default function Window({ title, onClose, onPointerDown, children }: Wind
                     </div>
 
                     <div className="flex items-center gap-1">
-                        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 transition-colors">
+                        <button
+                            aria-label="Minimize"
+                            className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 transition-colors"
+                        >
                             <Minus size={14} />
                         </button>
-                        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 transition-colors">
+                        <button
+                            aria-label="Maximize"
+                            className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 transition-colors"
+                        >
                             <Square size={12} />
                         </button>
                         <button
                             onClick={onClose}
+                            aria-label="Close Window"
                             className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-500/20 text-zinc-500 hover:text-red-400 transition-colors"
                         >
                             <X size={16} />

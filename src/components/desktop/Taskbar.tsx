@@ -16,14 +16,17 @@ export default function Taskbar({ openApps, activeApp, onAppClick }: TaskbarProp
         <div className="h-12 w-full bg-zinc-900/80 backdrop-blur-xl border-t border-white/10 flex items-center px-4 justify-between relative z-[999]">
             <div className="flex items-center gap-4">
                 {/* Start Button */}
-                <div className="w-8 h-8 rounded bg-zinc-800 border border-white/10 flex items-center justify-center hover:bg-zinc-700 transition-colors cursor-pointer">
+                <button
+                    aria-label="Start Menu"
+                    className="w-8 h-8 rounded bg-zinc-800 border border-white/10 flex items-center justify-center hover:bg-zinc-700 transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-white/20"
+                >
                     <div className="w-4 h-4 grid grid-cols-2 gap-0.5">
                         <div className="bg-zinc-400 rounded-sm" />
                         <div className="bg-zinc-400 rounded-sm" />
                         <div className="bg-zinc-400 rounded-sm" />
                         <div className="bg-zinc-400 rounded-sm" />
                     </div>
-                </div>
+                </button>
 
                 {/* Separator */}
                 <div className="h-6 w-px bg-white/10" />
@@ -40,13 +43,14 @@ export default function Taskbar({ openApps, activeApp, onAppClick }: TaskbarProp
                             <button
                                 key={appId}
                                 onClick={() => onAppClick(appId)}
+                                aria-label={`Switch to ${app.label}`}
                                 className={`
-                  relative w-10 h-10 rounded-lg flex items-center justify-center transition-all group
+                  relative w-10 h-10 rounded-lg flex items-center justify-center transition-all group outline-none
                   ${isActive ? 'bg-white/10' : 'hover:bg-white/5'}
+                  focus-visible:ring-1 focus-visible:ring-white/20
                 `}
                             >
                                 <div className={`text-zinc-400 group-hover:text-zinc-200 ${isActive ? 'text-zinc-100 scale-90' : ''}`}>
-                                    {/* We might want a smaller icon here, but for now we'll reuse the component one or just scale it */}
                                     {app.icon}
                                 </div>
 
