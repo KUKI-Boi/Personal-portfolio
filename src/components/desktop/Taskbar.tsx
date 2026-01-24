@@ -1,11 +1,19 @@
+import { AppId, APPS } from "./Desktop";
+
+interface TaskbarProps {
+    openApps: AppId[];
+    activeApp: AppId | null;
+    onAppClick: (id: AppId) => void;
+}
+
 /**
  * Taskbar component
  * Bottom navigation bar for the desktop.
  * Shows open apps and system controls.
  */
-export default function Taskbar() {
+export default function Taskbar({ openApps, activeApp, onAppClick }: TaskbarProps) {
     return (
-        <div className="h-12 w-full bg-zinc-900/80 backdrop-blur-xl border-t border-white/10 flex items-center px-4 justify-between relative z-50">
+        <div className="h-12 w-full bg-zinc-900/80 backdrop-blur-xl border-t border-white/10 flex items-center px-4 justify-between relative z-[999]">
             <div className="flex items-center gap-4">
                 {/* Start Button */}
                 <div className="w-8 h-8 rounded bg-zinc-800 border border-white/10 flex items-center justify-center hover:bg-zinc-700 transition-colors cursor-pointer">
@@ -20,10 +28,34 @@ export default function Taskbar() {
                 {/* Separator */}
                 <div className="h-6 w-px bg-white/10" />
 
-                {/* Pinned Apps */}
+                {/* Open Apps */}
                 <div className="flex items-center gap-1">
-                    <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center hover:bg-white/10 cursor-pointer" />
-                    <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center hover:bg-white/10 cursor-pointer" />
+                    {openApps.map((appId) => {
+                        const app = APPS.find(a => a.id === appId);
+                        if (!app) return null;
+
+                        const isActive = activeApp === appId;
+
+                        return (
+                            <button
+                                key={appId}
+                                onClick={() => onAppClick(appId)}
+                                className={`
+                  relative w-10 h-10 rounded-lg flex items-center justify-center transition-all group
+                  ${isActive ? 'bg-white/10' : 'hover:bg-white/5'}
+                `}
+                            >
+                                <div className={`text-zinc-400 group-hover:text-zinc-200 ${isActive ? 'text-zinc-100 scale-90' : ''}`}>
+                                    {/* We might want a smaller icon here, but for now we'll reuse the component one or just scale it */}
+                                    {app.icon}
+                                </div>
+
+                                {isActive && (
+                                    <div className="absolute bottom-1 w-1 h-1 bg-zinc-100 rounded-full" />
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 
