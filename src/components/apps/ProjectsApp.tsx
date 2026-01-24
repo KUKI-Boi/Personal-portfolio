@@ -1,127 +1,76 @@
 "use client";
 
-import { ExternalLink, Github, Code, Cpu, Mail, ChevronRight } from "lucide-react";
+import { ExternalLink, Github, ChevronRight } from "lucide-react";
 
 interface Project {
     title: string;
     description: string;
-    contributions: string[];
-    techStack: string[];
-    icon: React.ReactNode;
-    accent: string;
+    tags: string[];
 }
 
 const PROJECTS: Project[] = [
     {
         title: "Collision-Free Vehicle Overtaking",
-        description: "MATLAB simulation modeling safe overtaking maneuvers using state-based logic and collision avoidance.",
-        contributions: [
-            "Designed vehicle motion logic & lane-change states",
-            "Visualized dynamic movement via plotting",
-            "Ensured collision-free safe transitions"
-        ],
-        techStack: ["MATLAB", "Logic Design"],
-        icon: <Code size={24} />,
-        accent: "blue",
+        description: "MATLAB simulation modeling safe overtaking maneuvers using state-based logic.",
+        tags: ["MATLAB", "Logic", "Sim"]
     },
     {
         title: "IoT Fire Alerting System",
-        description: "Detection system using ESP32/ESP8266 to monitor fire hazards and provide real-time alerts.",
-        contributions: [
-            "Designed circuit connections and simulations",
-            "Implemented sensor logic and alert mechanism",
-            "Simulated system behavior via Wokwi"
-        ],
-        techStack: ["ESP32", "C++", "IoT"],
-        icon: <Cpu size={24} />,
-        accent: "orange",
+        description: "Detection system using ESP32 to monitor fire hazards and provide real-time alerts.",
+        tags: ["ESP32", "IoT", "C++"]
     },
     {
         title: "HR Email Automation",
         description: "Automated rejection workflows for applicants using Google Sheets and Apps Script.",
-        contributions: [
-            "Built custom Google Apps Script logic",
-            "Integrated UI sidebar for one-click utility",
-            "Managed status tracking & templates"
-        ],
-        techStack: ["Apps Script", "Automation"],
-        icon: <Mail size={24} />,
-        accent: "green",
+        tags: ["Apps Script", "Automation"]
     },
 ];
 
-/**
- * ProjectsApp component
- * Engineering-first project showcase optimized for skimming.
- */
 export default function ProjectsApp() {
     return (
-        <div className="max-w-4xl mx-auto space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div className="grid grid-cols-1 gap-12">
+        <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="text-center space-y-2">
+                <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase">Showcasing My Work</h2>
+                <p className="text-zinc-500 text-sm font-black uppercase tracking-widest">A showcase of my recent work and side projects</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
                 {PROJECTS.map((project, index) => (
                     <div
                         key={index}
-                        className="group relative bg-white/[0.02] border border-white/5 rounded-[40px] p-8 md:p-12 transition-all hover:bg-white/[0.04] hover:border-white/10"
+                        className="group p-8 bg-zinc-900/30 border border-white/5 rounded-2xl hover:bg-zinc-900/50 transition-all duration-500"
                     >
-                        {/* Project Header */}
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-10">
-                            <div className="flex items-center gap-6">
-                                <div className={`w-16 h-16 rounded-3xl bg-zinc-900 border border-white/10 flex items-center justify-center shadow-2xl transition-transform group-hover:scale-110 duration-500`}>
-                                    <div className={
-                                        project.accent === 'blue' ? 'text-accent-cyan' :
-                                            project.accent === 'orange' ? 'text-orange-400' :
-                                                'text-green-400'
-                                    }>
-                                        {project.icon}
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-black text-white tracking-tight">{project.title}</h3>
-                                    <div className="flex flex-wrap gap-3 mt-3">
-                                        {project.techStack.map((tech) => (
-                                            <span key={tech} className="px-3 py-1 bg-white/5 rounded-full text-[10px] font-black uppercase tracking-widest text-zinc-500 border border-white/5">
-                                                {tech}
+                        <div className="flex flex-col md:flex-row justify-between gap-6">
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3">
+                                    <h3 className="text-xl font-black text-white uppercase tracking-tight">{project.title}</h3>
+                                    <div className="flex gap-2">
+                                        {project.tags.map(tag => (
+                                            <span key={tag} className="px-2 py-0.5 bg-white/5 rounded text-[8px] font-black uppercase text-zinc-500 border border-white/5">
+                                                {tag}
                                             </span>
                                         ))}
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="flex items-center gap-3">
-                                <button className="px-6 py-3 bg-white/5 hover:bg-white/10 rounded-2xl text-xs font-bold text-zinc-400 hover:text-white transition-all border border-white/5">
-                                    Case Study
-                                </button>
-                                <button className="p-3 bg-primary/10 rounded-2xl text-primary border border-primary/20 hover:bg-primary/20 transition-all">
-                                    <ExternalLink size={18} />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Project Details */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                            <div className="space-y-4">
-                                <h4 className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Description</h4>
-                                <p className="text-zinc-400 text-lg leading-relaxed font-medium">
+                                <p className="text-zinc-400 text-sm font-black leading-relaxed max-w-xl">
                                     {project.description}
                                 </p>
+
+                                <div className="flex items-center gap-4 pt-2">
+                                    <button className="px-5 py-2 bg-white/5 text-zinc-400 hover:text-white rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/5 transition-all flex items-center gap-2">
+                                        <ExternalLink size={12} /> Preview
+                                    </button>
+                                    <button className="px-5 py-2 bg-white/5 text-zinc-400 hover:text-white rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/5 transition-all flex items-center gap-2">
+                                        <Github size={12} /> Source
+                                    </button>
+                                </div>
                             </div>
 
-                            <div className="space-y-6">
-                                <h4 className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">Contributions</h4>
-                                <ul className="space-y-4">
-                                    {project.contributions.map((contribution, idx) => (
-                                        <li key={idx} className="flex items-start gap-4 text-zinc-300 text-sm font-medium">
-                                            <ChevronRight size={14} className="mt-1 text-primary/50 shrink-0" />
-                                            {contribution}
-                                        </li>
-                                    ))}
-                                </ul>
+                            <div className="flex items-center gap-2 opacity-20 group-hover:opacity-100 transition-opacity">
+                                <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-zinc-500">
+                                    <ChevronRight size={16} />
+                                </div>
                             </div>
-                        </div>
-
-                        {/* Subtle number indicator */}
-                        <div className="absolute top-8 right-12 text-6xl font-black text-white/[0.02] pointer-events-none select-none">
-                            0{index + 1}
                         </div>
                     </div>
                 ))}
