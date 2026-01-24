@@ -14,6 +14,7 @@ interface WindowProps {
 /**
  * Window component
  * Generic container for content that mimics an OS window.
+ * Updated with premium glassmorphism and high-contrast typography.
  */
 export default function Window({ title, onClose, onPointerDown, children }: WindowProps) {
     return (
@@ -22,49 +23,51 @@ export default function Window({ title, onClose, onPointerDown, children }: Wind
             onPointerDown={onPointerDown}
         >
             <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
                 transition={{
                     type: "spring",
                     damping: 25,
                     stiffness: 300,
-                    duration: 0.2
+                    duration: 0.3
                 }}
-                className="w-full max-w-4xl max-h-[80vh] bg-zinc-900 border border-white/10 rounded-xl shadow-2xl flex flex-col pointer-events-auto overflow-hidden"
+                className="w-full max-w-4xl max-h-[85vh] glass rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col pointer-events-auto overflow-hidden border border-white/10"
             >
                 {/* Window Header / Title Bar */}
-                <div className="h-11 bg-zinc-800/80 backdrop-blur-md flex items-center justify-between px-4 border-b border-white/5 select-none">
-                    <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-zinc-300">{title}</span>
+                <div className="h-14 bg-white/[0.03] backdrop-blur-3xl flex items-center justify-between px-6 border-b border-white/5 select-none">
+                    <div className="flex items-center gap-3">
+                        <div className="flex gap-1.5">
+                            <div className="w-3 h-3 rounded-full bg-red-500/80 border border-red-400/20" />
+                            <div className="w-3 h-3 rounded-full bg-yellow-500/80 border border-yellow-400/20" />
+                            <div className="w-3 h-3 rounded-full bg-green-500/80 border border-green-400/20" />
+                        </div>
+                        <span className="text-sm font-bold text-zinc-100 tracking-tight uppercase px-3 py-1 bg-white/5 rounded-lg border border-white/5">
+                            {title}
+                        </span>
                     </div>
 
-                    <div className="flex items-center gap-1">
-                        <button
-                            aria-label="Minimize"
-                            className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 transition-colors"
-                        >
-                            <Minus size={14} />
+                    <div className="flex items-center gap-2">
+                        <button className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 text-zinc-400 hover:text-white transition-all">
+                            <Minus size={16} />
                         </button>
-                        <button
-                            aria-label="Maximize"
-                            className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-zinc-500 transition-colors"
-                        >
-                            <Square size={12} />
+                        <button className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 text-zinc-400 hover:text-white transition-all">
+                            <Square size={14} />
                         </button>
                         <button
                             onClick={onClose}
-                            aria-label="Close Window"
-                            className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-500/20 text-zinc-500 hover:text-red-400 transition-colors"
+                            className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-red-500/30 text-zinc-400 hover:text-red-300 transition-all"
                         >
-                            <X size={16} />
+                            <X size={18} />
                         </button>
                     </div>
                 </div>
 
                 {/* Window Content */}
-                <div className="flex-1 overflow-y-auto bg-zinc-900/50 p-6 text-zinc-300">
-                    {children}
+                <div className="flex-1 overflow-y-auto bg-black/5 p-8 text-zinc-200">
+                    <div className="max-w-3xl mx-auto h-full">
+                        {children}
+                    </div>
                 </div>
             </motion.div>
         </div>

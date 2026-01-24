@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import dynamic from "next/dynamic";
 import Taskbar from "./Taskbar";
 import AppIcon from "./AppIcon";
 import Window from "./Window";
@@ -22,8 +23,15 @@ import {
     Mail,
     Award,
     Heart,
-    GraduationCap
+    GraduationCap,
+    ChevronRight
 } from "lucide-react";
+
+// Lazy load 3D to maintain performance
+const Hero3D = dynamic(() => import("./Hero3D"), {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 bg-black/20 animate-pulse" />
+});
 
 export type AppId = "about" | "projects" | "contact" | "skills" | "volunteering" | "education";
 
@@ -45,6 +53,7 @@ export const APPS: AppConfig[] = [
 /**
  * Desktop component
  * Main container for Likith's Portfolio OS.
+ * Redesigned with premium 3D hero and improved visual hierarchy.
  */
 export default function Desktop() {
     const [openApps, setOpenApps] = useState<AppId[]>([]);
@@ -61,23 +70,21 @@ export default function Desktop() {
             ease: "power2.out",
         });
 
-        // Stagger app icons
+        // Profile focal point comes in
+        tl.from(".profile-focal", {
+            opacity: 0,
+            y: 30,
+            duration: 1.2,
+            ease: "power3.out",
+        }, "-=0.5");
+
+        // Items stagger in
         tl.from(".app-icon", {
             opacity: 0,
-            y: 20,
             scale: 0.8,
             duration: 0.8,
-            stagger: 0.1,
-            ease: "back.out(1.7)",
-        }, "-=1");
-
-        // Desktop identity text fade in
-        tl.from(".desktop-identity", {
-            opacity: 0,
-            y: 10,
-            duration: 1,
-            delay: 0.5,
-            ease: "power2.out"
+            stagger: 0.08,
+            ease: "power2.out",
         }, "-=0.5");
 
     }, { scope: container });
@@ -105,22 +112,45 @@ export default function Desktop() {
     };
 
     return (
-        <div ref={container} className="relative h-screen w-screen overflow-hidden bg-[#0a0a0a] text-zinc-100 flex flex-col">
-            {/* Desktop Background / Wallpaper Area */}
-            <div className="desktop-bg absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-50 pointer-events-none" />
+        <div ref={container} className="relative h-screen w-screen overflow-hidden bg-[#0a0b14] text-zinc-100 flex flex-col font-sans">
+            {/* 3D Reactive Backdrop */}
+            <Hero3D />
 
-            {/* Desktop Identity Overlay (Subtle) */}
-            <div className="desktop-identity absolute top-12 left-12 z-0 pointer-events-none hidden md:block select-none max-w-lg">
-                <h1 className="text-4xl font-black text-white/10 tracking-tighter uppercase italic">Likith Kumar B M</h1>
-                <p className="text-white/5 font-bold tracking-widest text-xs uppercase mt-2">Frontend Developer | UI/UX Enthusiast | Electronics & Embedded Systems Learner</p>
-                <p className="text-white/5 text-sm mt-4 leading-relaxed font-medium">
-                    "I build clean, responsive user interfaces and work on practical engineering projects that bridge software, hardware, and real-world impact."
-                </p>
-            </div>
+            {/* Desktop Background / Mesh Gradient Overlay */}
+            <div className="desktop-bg absolute inset-0 bg-[radial-gradient(circle_at_40%_40%,_rgba(79,195,247,0.05)_0%,_transparent_100%),radial-gradient(circle_at_60%_60%,_rgba(179,157,219,0.05)_0%,_transparent_100%)] pointer-events-none" />
 
-            {/* App Icons Grid */}
-            <main className="flex-1 flex items-center justify-center p-8 pb-12 relative z-10">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-5xl w-full">
+            {/* Main Content Area */}
+            <main className="flex-1 flex flex-col items-center justify-center relative z-10 px-8">
+
+                {/* Profile Focal Point */}
+                <div className="profile-focal text-center space-y-8 mb-16 select-none cursor-default max-w-3xl">
+                    <div className="space-y-4">
+                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-gradient pb-2 drop-shadow-2xl">
+                            Likith Kumar B M
+                        </h1>
+                        <p className="text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-primary/80 flex items-center justify-center gap-4">
+                            <span className="w-12 h-px bg-primary/30" />
+                            Frontend Developer | Electronics Learner
+                            <span className="w-12 h-px bg-primary/30" />
+                        </p>
+                    </div>
+
+                    <p className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
+                        "I build clean, responsive user interfaces and work on practical engineering projects that bridge software, hardware, and real-world impact."
+                    </p>
+
+                    <div className="pt-4">
+                        <button
+                            onClick={() => openApp("about")}
+                            className="group flex items-center gap-3 mx-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/50 rounded-full transition-all duration-300 text-zinc-100 font-bold tracking-widest uppercase text-xs"
+                        >
+                            Start Exploring <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform text-primary" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Dynamic App Icons (Now more spacious and secondary) */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 md:gap-12 w-full max-w-5xl opacity-80 hover:opacity-100 transition-opacity duration-500">
                     {APPS.map((app) => (
                         <AppIcon
                             key={app.id}

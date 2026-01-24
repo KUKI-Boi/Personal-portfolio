@@ -1,61 +1,65 @@
 "use client";
 
-import { Award, Zap, Users, Heart } from "lucide-react";
+import { Award, Zap, Users, Heart, ChevronRight } from "lucide-react";
 
 /**
  * VolunteeringApp component
- * Highlights volunteering and leadership experiences.
+ * High-impact section for outreach and leadership.
  */
 export default function VolunteeringApp() {
     return (
-        <div className="max-w-3xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="space-y-8">
-                <section className="bg-zinc-800/50 border border-white/5 rounded-2xl p-8 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-8 text-white/5 pointer-events-none group-hover:text-white/10 transition-colors">
-                        <Zap size={120} />
+        <div className="max-w-4xl mx-auto space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="space-y-12">
+                <section className="bg-white/[0.02] border border-white/5 rounded-[40px] p-8 md:p-12 relative overflow-hidden group">
+                    {/* Abstract background element */}
+                    <div className="absolute top-0 right-0 p-12 text-white/[0.03] group-hover:text-primary/10 transition-colors duration-500 pointer-events-none">
+                        <Zap size={200} />
                     </div>
 
-                    <div className="relative z-10 space-y-6">
-                        <div className="space-y-1">
-                            <h2 className="text-2xl font-bold text-zinc-100">School Outreach Program</h2>
-                            <p className="text-blue-400 font-medium">Sustainable Energy Education</p>
-                        </div>
-
-                        <div className="flex flex-col gap-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-500">
-                                    <Award size={18} />
-                                </div>
-                                <span className="text-zinc-300">IEEE Student Branch, CHRIST University</span>
+                    <div className="relative z-10 space-y-8">
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2 text-primary font-black uppercase tracking-[0.4em] text-[10px]">
+                                <Users size={14} /> Leadership & Outreach
                             </div>
+                            <h2 className="text-4xl font-black text-white tracking-tighter">School Outreach Program</h2>
+                            <p className="text-xl text-accent-cyan font-bold tracking-tight">Sustainable Energy Education</p>
                         </div>
 
-                        <div className="space-y-4 pt-4 border-t border-white/5">
-                            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest italic">Highlights</h3>
-                            <ul className="space-y-3">
-                                {[
-                                    "Explained renewable energy concepts like solar power in a student-friendly manner",
-                                    "Conducted interactive learning sessions",
-                                    "Organized and participated in educational games",
-                                    "Created a positive learning environment"
-                                ].map((item, idx) => (
-                                    <li key={idx} className="flex items-center gap-3 text-zinc-300">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
+                        <div className="flex items-center gap-4 py-4 px-6 bg-white/5 border border-white/5 rounded-2xl w-fit">
+                            <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center text-primary shadow-lg border border-white/10">
+                                <Award size={20} />
+                            </div>
+                            <span className="text-zinc-200 font-bold text-sm">IEEE Student Branch, CHRIST University</span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 pt-10 border-t border-white/5">
+                            {[
+                                { title: "Conceptual Clarity", text: "Explained renewable energy & solar power in student-friendly modules." },
+                                { title: "Interactive Learning", text: "Conducted hands-on sessions and educational games." },
+                                { title: "Session Design", text: "Created engaging agendas to foster positive learning environments." },
+                                { title: "Organization", text: "Led logistical planning for school-level technical outreach." }
+                            ].map((item, idx) => (
+                                <div key={idx} className="space-y-2">
+                                    <h4 className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">{item.title}</h4>
+                                    <p className="text-sm text-zinc-400 leading-relaxed font-medium">{item.text}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
 
-                <section className="bg-zinc-900/50 border border-white/10 rounded-2xl p-8">
-                    <h3 className="text-sm font-bold text-zinc-500 uppercase mb-4 flex items-center gap-2">
-                        <Heart size={14} className="text-red-400" /> Impact Statement
-                    </h3>
-                    <p className="text-lg text-zinc-100 italic font-serif leading-relaxed">
-                        "This experience strengthened communication, teamwork, and leadership skills and reinforced a commitment to socially responsible engineering."
-                    </p>
+                <section className="glass p-12 rounded-[40px] border border-white/5 text-center">
+                    <div className="max-w-xl mx-auto space-y-6">
+                        <div className="flex justify-center">
+                            <div className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-400 border border-red-500/20">
+                                <Heart size={24} fill="currentColor" className="opacity-20" />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-black text-white tracking-tight">The Impact</h3>
+                        <p className="text-zinc-300 text-lg italic leading-relaxed font-serif">
+                            "This experience strengthened my communication and leadership skills while reinforcing my commitment to socially responsible engineering."
+                        </p>
+                    </div>
                 </section>
             </div>
         </div>

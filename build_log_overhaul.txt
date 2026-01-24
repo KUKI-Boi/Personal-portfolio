@@ -1,0 +1,70 @@
+
+> desktop-portfolio@0.1.0 build
+> next build
+
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of D:\Desktop\pnpm-lock.yaml as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * D:\Desktop\Personal portfolio\desktop-portfolio\package-lock.json
+
+Γû▓ Next.js 16.1.4 (Turbopack)
+
+  Creating an optimized production build ...
+Error: Can't resolve 'tailwindcss-animate' in 'D:\Desktop\Personal portfolio\desktop-portfolio\src\styles'
+    [at finishWithoutResolve (D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\enhanced-resolve\lib\Resolver.js:565:18)]
+    [at D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\enhanced-resolve\lib\Resolver.js:657:14]
+    [at D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\enhanced-resolve\lib\Resolver.js:718:5]
+    [at eval (eval at create (D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)]
+    [at D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\enhanced-resolve\lib\Resolver.js:718:5]
+    [at eval (eval at create (D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)]
+    [at D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43]
+    [at D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\enhanced-resolve\lib\Resolver.js:718:5]
+    [at eval (eval at create (D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)]
+    [at D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\enhanced-resolve\lib\Resolver.js:718:5] {
+  details: "resolve 'tailwindcss-animate' in 'D:\\Desktop\\Personal portfolio\\desktop-portfolio\\src\\styles'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: D:\\Desktop\\Personal portfolio\\desktop-portfolio\\package.json (relative path: ./src/styles)\n' +
+    '    resolve as module\n' +
+    "      D:\\Desktop\\Personal portfolio\\desktop-portfolio\\src\\styles\\node_modules doesn't exist or is not a directory\n" +
+    "      D:\\Desktop\\Personal portfolio\\desktop-portfolio\\src\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in D:\\Desktop\\Personal portfolio\\desktop-portfolio\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: D:\\Desktop\\Personal portfolio\\desktop-portfolio\\package.json (relative path: ./node_modules/tailwindcss-animate)\n' +
+    '            no extension\n' +
+    "              D:\\Desktop\\Personal portfolio\\desktop-portfolio\\node_modules\\tailwindcss-animate doesn't exist\n" +
+    '            .js\n' +
+    "              D:\\Desktop\\Personal portfolio\\desktop-portfolio\\node_modules\\tailwindcss-animate.js doesn't exist\n" +
+    '            .json\n' +
+    "              D:\\Desktop\\Personal portfolio\\desktop-portfolio\\node_modules\\tailwindcss-animate.json doesn't exist\n" +
+    '            .node\n' +
+    "              D:\\Desktop\\Personal portfolio\\desktop-portfolio\\node_modules\\tailwindcss-animate.node doesn't exist\n" +
+    '            .ts\n' +
+    "              D:\\Desktop\\Personal portfolio\\desktop-portfolio\\node_modules\\tailwindcss-animate.ts doesn't exist\n" +
+    "        D:\\Desktop\\Personal portfolio\\desktop-portfolio\\node_modules\\tailwindcss-animate doesn't exist\n" +
+    "      D:\\Desktop\\Personal portfolio\\node_modules doesn't exist or is not a directory\n" +
+    "      D:\\Desktop\\node_modules doesn't exist or is not a directory\n" +
+    "      D:\\node_modules doesn't exist or is not a directory"
+}
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./Personal portfolio/desktop-portfolio/src/styles/globals.css
+Error evaluating Node.js code
+CssSyntaxError: tailwindcss: D:\Desktop\Personal portfolio\desktop-portfolio\src\styles\globals.css:1:1: Can't resolve 'tailwindcss-animate' in 'D:\Desktop\Personal portfolio\desktop-portfolio\src\styles'
+    at Input.error (Personal portfolio/desktop-portfolio/node_modules/postcss/lib/input.js:135:16) [D:\Desktop\Personal portfolio\desktop-portfolio\.next\build\chunks\94378_cc584a06._.js:4651:22]
+    at Root.error (Personal portfolio/desktop-portfolio/node_modules/postcss/lib/node.js:146:32) [D:\Desktop\Personal portfolio\desktop-portfolio\.next\build\chunks\94378_cc584a06._.js:928:38]
+    [at Object.Once (D:\Desktop\Personal portfolio\desktop-portfolio\node_modules\@tailwindcss\postcss\dist\index.js:10:6911)]
+    at async LazyResult.runAsync (Personal portfolio/desktop-portfolio/node_modules/postcss/lib/lazy-result.js:293:11) [D:\Desktop\Personal portfolio\desktop-portfolio\.next\build\chunks\94378_cc584a06._.js:6206:21]
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [D:\Desktop\Personal portfolio\desktop-portfolio\.next\build\chunks\[root-of-the-server]__31215f66._.js:146:36]
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [D:\Desktop\Personal portfolio\desktop-portfolio\.next\build\chunks\[root-of-the-server]__866a8d44._.js:443:31]
+
+Import trace:
+  Client Component Browser:
+    ./Personal portfolio/desktop-portfolio/src/styles/globals.css [Client Component Browser]
+    ./Personal portfolio/desktop-portfolio/src/app/layout.tsx [Server Component]
+
+
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [D:\Desktop\Personal portfolio\desktop-portfolio\.next\build\chunks\[root-of-the-server]__31215f66._.js:146:36])
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [D:\Desktop\Personal portfolio\desktop-portfolio\.next\build\chunks\[root-of-the-server]__866a8d44._.js:443:31])
