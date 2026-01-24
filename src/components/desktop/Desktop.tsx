@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import Taskbar from "./Taskbar";
 import AppIcon from "./AppIcon";
 import Window from "./Window";
@@ -33,10 +35,32 @@ export const APPS: AppConfig[] = [
 export default function Desktop() {
     const [openApps, setOpenApps] = useState<AppId[]>([]);
     const [activeApp, setActiveApp] = useState<AppId | null>(null);
+    const container = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        const tl = gsap.timeline();
+
+        // Fade in desktop background
+        tl.from(".desktop-bg", {
+            opacity: 0,
+            duration: 1.5,
+            ease: "power2.out",
+        });
+
+        // Stagger app icons
+        tl.from(".app-icon", {
+            opacity: 0,
+            y: 20,
+            scale: 0.8,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+        }, "-=1"); // Start staggering before background fade ends
+
+    }, { scope: container });
 
     const focusApp = (id: AppId) => {
         setActiveApp(id);
-        // Move to front logic: Move the app to the end of the openApps array
         setOpenApps(prev => {
             const rest = prev.filter(appId => appId !== id);
             return [...rest, id];
@@ -53,13 +77,14 @@ export default function Desktop() {
     const closeApp = (id: AppId) => {
         setOpenApps(prev => prev.filter((appId) => appId !== id));
         if (activeApp === id) {
-            setActiveApp(null); // Simple logic: if active app closed, nothing is active
+            setActiveApp(null);
         }
     };
 
     return (
-        <div className="relative h-screen w-screen overflow-hidden bg-[#0a0a0a] text-zinc-100 flex flex-col">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-50 pointer-events-none" />
+        <div ref={container} className="relative h-screen w-screen overflow-hidden bg-[#0a0a0a] text-zinc-100 flex flex-col">
+            {/* Desktop Background / Wallpaper Area */}
+            <div className="desktop-bg absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-50 pointer-events-none" />
 
             {/* App Icons Grid */}
             <main className="flex-1 flex items-center justify-center p-8 pb-12 relative z-10">
@@ -75,7 +100,7 @@ export default function Desktop() {
                 </div>
             </main>
 
-            {/* Windows Layer - Render in order of openApps for stacking */}
+            {/* Windows Layer */}
             <AnimatePresence>
                 {openApps.map((appId, index) => {
                     const app = APPS.find(a => a.id === appId);
