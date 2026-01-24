@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { AppId, APPS } from "./Desktop";
 
 interface TaskbarProps {
@@ -12,6 +13,21 @@ interface TaskbarProps {
  * Shows open apps and system controls.
  */
 export default function Taskbar({ openApps, activeApp, onAppClick }: TaskbarProps) {
+    const [time, setTime] = useState<string>("");
+    const [date, setDate] = useState<string>("");
+
+    useEffect(() => {
+        const updateTime = () => {
+            const now = new Date();
+            setTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+            setDate(now.toLocaleDateString([], { month: '2-digit', day: '2-digit', year: 'numeric' }));
+        };
+
+        updateTime();
+        const interval = setInterval(updateTime, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="h-12 w-full bg-zinc-900/80 backdrop-blur-xl border-t border-white/10 flex items-center px-4 justify-between relative z-[999]">
             <div className="flex items-center gap-4">
@@ -69,9 +85,9 @@ export default function Taskbar({ openApps, activeApp, onAppClick }: TaskbarProp
                     <span>ENG</span>
                     <div className="w-4 h-4 rounded border border-zinc-700 flex items-center justify-center">?</div>
                 </div>
-                <div className="flex flex-col items-end leading-none">
-                    <span>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                    <span>{new Date().toLocaleDateString([], { month: '2-digit', day: '2-digit', year: 'numeric' })}</span>
+                <div className="flex flex-col items-end leading-none min-w-[60px]">
+                    <span>{time}</span>
+                    <span>{date}</span>
                 </div>
             </div>
         </div>
