@@ -7,12 +7,25 @@ import { useGSAP } from "@gsap/react";
 import Taskbar from "./Taskbar";
 import AppIcon from "./AppIcon";
 import Window from "./Window";
+
+// App Content Components
 import AboutApp from "../apps/AboutApp";
 import ProjectsApp from "../apps/ProjectsApp";
 import ContactApp from "../apps/ContactApp";
-import { User, Briefcase, Mail, FileText, Award, History, Terminal, Settings } from "lucide-react";
+import SkillsApp from "../apps/SkillsApp";
+import VolunteeringApp from "../apps/VolunteeringApp";
+import EducationApp from "../apps/EducationApp";
 
-export type AppId = "about" | "projects" | "contact" | "resume" | "skills" | "experience" | "terminal" | "settings";
+import {
+    User,
+    Briefcase,
+    Mail,
+    Award,
+    Heart,
+    GraduationCap
+} from "lucide-react";
+
+export type AppId = "about" | "projects" | "contact" | "skills" | "volunteering" | "education";
 
 export interface AppConfig {
     id: AppId;
@@ -23,17 +36,15 @@ export interface AppConfig {
 export const APPS: AppConfig[] = [
     { id: "about", label: "About", icon: <User size={28} /> },
     { id: "projects", label: "Projects", icon: <Briefcase size={28} /> },
-    { id: "contact", label: "Contact", icon: <Mail size={28} /> },
-    { id: "resume", label: "Resume", icon: <FileText size={28} /> },
     { id: "skills", label: "Skills", icon: <Award size={28} /> },
-    { id: "experience", label: "Experience", icon: <History size={28} /> },
-    { id: "terminal", label: "Terminal", icon: <Terminal size={28} /> },
-    { id: "settings", label: "Settings", icon: <Settings size={28} /> },
+    { id: "education", label: "Education", icon: <GraduationCap size={28} /> },
+    { id: "volunteering", label: "Volunteering", icon: <Heart size={28} /> },
+    { id: "contact", label: "Contact", icon: <Mail size={28} /> },
 ];
 
 /**
  * Desktop component
- * Main container for the OS-like interface.
+ * Main container for Likith's Portfolio OS.
  */
 export default function Desktop() {
     const [openApps, setOpenApps] = useState<AppId[]>([]);
@@ -59,6 +70,15 @@ export default function Desktop() {
             stagger: 0.1,
             ease: "back.out(1.7)",
         }, "-=1");
+
+        // Desktop identity text fade in
+        tl.from(".desktop-identity", {
+            opacity: 0,
+            y: 10,
+            duration: 1,
+            delay: 0.5,
+            ease: "power2.out"
+        }, "-=0.5");
 
     }, { scope: container });
 
@@ -89,9 +109,18 @@ export default function Desktop() {
             {/* Desktop Background / Wallpaper Area */}
             <div className="desktop-bg absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-50 pointer-events-none" />
 
+            {/* Desktop Identity Overlay (Subtle) */}
+            <div className="desktop-identity absolute top-12 left-12 z-0 pointer-events-none hidden md:block select-none max-w-lg">
+                <h1 className="text-4xl font-black text-white/10 tracking-tighter uppercase italic">Likith Kumar B M</h1>
+                <p className="text-white/5 font-bold tracking-widest text-xs uppercase mt-2">Frontend Developer | UI/UX Enthusiast | Electronics & Embedded Systems Learner</p>
+                <p className="text-white/5 text-sm mt-4 leading-relaxed font-medium">
+                    "I build clean, responsive user interfaces and work on practical engineering projects that bridge software, hardware, and real-world impact."
+                </p>
+            </div>
+
             {/* App Icons Grid */}
             <main className="flex-1 flex items-center justify-center p-8 pb-12 relative z-10">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 max-w-4xl w-full">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-5xl w-full">
                     {APPS.map((app) => (
                         <AppIcon
                             key={app.id}
@@ -118,13 +147,10 @@ export default function Desktop() {
                             >
                                 {appId === "about" && <AboutApp />}
                                 {appId === "projects" && <ProjectsApp />}
+                                {appId === "skills" && <SkillsApp />}
+                                {appId === "volunteering" && <VolunteeringApp />}
+                                {appId === "education" && <EducationApp />}
                                 {appId === "contact" && <ContactApp />}
-
-                                {!["about", "projects", "contact"].includes(appId) && (
-                                    <div className="flex items-center justify-center h-full text-zinc-500 italic">
-                                        Coming soon...
-                                    </div>
-                                )}
                             </Window>
                         </div>
                     );

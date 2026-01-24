@@ -1,74 +1,111 @@
 "use client";
 
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Code, Cpu, Mail } from "lucide-react";
 
 interface Project {
     title: string;
     description: string;
-    tags: string[];
+    contributions: string[];
+    techStack: string[];
+    icon: React.ReactNode;
 }
 
 const PROJECTS: Project[] = [
     {
-        title: "AI Hardware Designer",
-        description: "An intelligent platform for automating hardware design workflows using Groq and OpenRouter APIs.",
-        tags: ["Next.js", "Groq", "Tailwind"],
+        title: "Collision-Free Vehicle Overtaking",
+        description: "Developed a MATLAB-based simulation to model a safe overtaking maneuver between two vehicles using state-based logic and collision avoidance principles.",
+        contributions: [
+            "Designed vehicle motion logic and lane-change states",
+            "Visualized vehicle movement using dynamic plotting",
+            "Ensured collision-free transitions during overtaking"
+        ],
+        techStack: ["MATLAB"],
+        icon: <Code size={20} className="text-blue-400" />,
     },
     {
-        title: "Lumen EdTech",
-        description: "A creative educational platform focused on project-based and experiential learning for modern students.",
-        tags: ["React", "State-Mgmt", "GSAP"],
+        title: "IoT-Based Fire Alerting System",
+        description: "Designed an IoT fire detection system using ESP32/ESP8266 to monitor fire hazards and provide alerts.",
+        contributions: [
+            "Designed circuit connections and simulations",
+            "Implemented sensor logic and alert mechanism",
+            "Simulated system behavior using Wokwi"
+        ],
+        techStack: ["ESP32", "ESP8266", "IoT Sensors"],
+        icon: <Cpu size={20} className="text-orange-400" />,
     },
     {
-        title: "AQMD Monitoring",
-        description: "Real-time air quality monitoring dashboard with advanced data visualization and live updates.",
-        tags: ["TypeScript", "Dashboard", "Charts"],
+        title: "HR Email Automation System",
+        description: "Automated rejection emails for job applicants using Google Sheets and Apps Script.",
+        contributions: [
+            "Built custom Google Apps Script logic",
+            "Integrated UI sidebar for one-click email sending",
+            "Managed applicant status tracking"
+        ],
+        techStack: ["Google Sheets", "Apps Script"],
+        icon: <Mail size={20} className="text-green-400" />,
     },
 ];
 
 /**
  * ProjectsApp component
- * Displays a list of projects with details.
+ * Displays Likith's engineering projects.
  */
 export default function ProjectsApp() {
     return (
-        <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-4xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-1 gap-8">
                 {PROJECTS.map((project, index) => (
                     <div
                         key={index}
-                        className="group relative bg-zinc-800/50 border border-white/5 rounded-xl p-6 transition-all hover:bg-zinc-800/80 hover:border-white/10 flex flex-col justify-between"
+                        className="group relative bg-zinc-900/50 border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-all shadow-lg"
                     >
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-bold text-zinc-100">{project.title}</h3>
+                        <div className="p-8">
+                            <div className="flex items-start justify-between mb-6">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-xl bg-zinc-800 border border-white/10 flex items-center justify-center text-zinc-400">
+                                        {project.icon}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-bold text-zinc-100">{project.title}</h3>
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            {project.techStack.map((tech) => (
+                                                <span key={tech} className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                                                    {tech}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="flex items-center gap-2">
-                                    <a href="#" className="p-2 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-200 transition-colors">
-                                        <Github size={16} />
-                                    </a>
-                                    <a href="#" className="p-2 rounded-lg hover:bg-white/5 text-zinc-500 hover:text-zinc-200 transition-colors">
-                                        <ExternalLink size={16} />
-                                    </a>
+                                    <span className="p-2 rounded-lg bg-zinc-800 border border-white/5 text-zinc-500 cursor-not-allowed opacity-50">
+                                        <Github size={18} />
+                                    </span>
+                                    <span className="p-2 rounded-lg bg-zinc-800 border border-white/5 text-zinc-500 cursor-not-allowed opacity-50">
+                                        <ExternalLink size={18} />
+                                    </span>
                                 </div>
                             </div>
-                            <p className="text-sm text-zinc-400 leading-relaxed">
-                                {project.description}
-                            </p>
-                        </div>
 
-                        <div className="mt-6 flex flex-wrap gap-2">
-                            {project.tags.map((tag) => (
-                                <span key={tag} className="px-2 py-1 bg-zinc-900 border border-white/5 rounded text-[10px] font-medium text-zinc-500 uppercase">
-                                    {tag}
-                                </span>
-                            ))}
+                            <div className="space-y-6">
+                                <p className="text-zinc-400 leading-relaxed italic">
+                                    {project.description}
+                                </p>
+
+                                <div className="space-y-3">
+                                    <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Key Contributions</h4>
+                                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                                        {project.contributions.map((contribution, idx) => (
+                                            <li key={idx} className="text-sm text-zinc-300 flex items-start gap-2">
+                                                <span className="text-zinc-600 mt-1.5 w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0" />
+                                                {contribution}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ))}
-            </div>
-
-            <div className="text-center pt-8 border-t border-white/5 text-sm text-zinc-500 italic">
-                Viewing 3 of 12 highlighted projects.
             </div>
         </div>
     );
