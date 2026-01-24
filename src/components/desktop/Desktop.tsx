@@ -7,6 +7,9 @@ import { useGSAP } from "@gsap/react";
 import Taskbar from "./Taskbar";
 import AppIcon from "./AppIcon";
 import Window from "./Window";
+import AboutApp from "../apps/AboutApp";
+import ProjectsApp from "../apps/ProjectsApp";
+import ContactApp from "../apps/ContactApp";
 import { User, Briefcase, Mail, FileText, Award, History, Terminal, Settings } from "lucide-react";
 
 export type AppId = "about" | "projects" | "contact" | "resume" | "skills" | "experience" | "terminal" | "settings";
@@ -55,7 +58,7 @@ export default function Desktop() {
             duration: 0.8,
             stagger: 0.1,
             ease: "back.out(1.7)",
-        }, "-=1"); // Start staggering before background fade ends
+        }, "-=1");
 
     }, { scope: container });
 
@@ -113,41 +116,9 @@ export default function Desktop() {
                                 onClose={() => closeApp(appId)}
                                 onPointerDown={() => focusApp(appId)}
                             >
-                                {appId === "about" && (
-                                    <div className="space-y-4">
-                                        <h2 className="text-2xl font-bold">Hello, I'm a Senior Frontend Engineer.</h2>
-                                        <p>I build clean, production-ready code using modern technologies like Next.js and Tailwind CSS.</p>
-                                    </div>
-                                )}
-
-                                {appId === "projects" && (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {[1, 2, 3, 4].map((i) => (
-                                            <div key={i} className="p-4 rounded-lg bg-zinc-800/50 border border-white/5">
-                                                <h3 className="font-medium">Project {i}</h3>
-                                                <p className="text-sm text-zinc-400">A sample project description for the portfolio.</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-
-                                {appId === "contact" && (
-                                    <form className="space-y-4 max-w-md mx-auto">
-                                        <div>
-                                            <label className="block text-sm font-medium mb-1">Name</label>
-                                            <input className="w-full bg-zinc-800 border border-white/10 rounded-lg p-2 outline-none focus:border-zinc-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-medium mb-1">Email</label>
-                                            <input className="w-full bg-zinc-800 border border-white/10 rounded-lg p-2 outline-none focus:border-zinc-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-medium mb-1">Message</label>
-                                            <textarea className="w-full bg-zinc-800 border border-white/10 rounded-lg p-2 outline-none focus:border-zinc-500 h-32" />
-                                        </div>
-                                        <button className="bg-zinc-100 text-zinc-900 font-bold py-2 px-4 rounded-lg w-full">Send Message</button>
-                                    </form>
-                                )}
+                                {appId === "about" && <AboutApp />}
+                                {appId === "projects" && <ProjectsApp />}
+                                {appId === "contact" && <ContactApp />}
 
                                 {!["about", "projects", "contact"].includes(appId) && (
                                     <div className="flex items-center justify-center h-full text-zinc-500 italic">
