@@ -31,7 +31,7 @@ export default function Window({
 }: WindowProps) {
     return (
         <div
-            className={`fixed inset-0 flex items-center justify-center pointer-events-none z-50 transition-all duration-300 ${isMaximized || immersive ? 'p-0' : 'p-4 md:p-12'} ${immersive ? 'z-[100]' : ''}`}
+            className={`fixed inset-0 flex items-center justify-center pointer-events-none z-50 transition-all duration-300 ${isMaximized || immersive ? 'p-0' : 'p-2 md:p-12'} ${immersive ? 'z-[100]' : ''}`}
             onPointerDown={onPointerDown}
         >
             <motion.div
@@ -46,7 +46,7 @@ export default function Window({
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 className={`w-full bg-[var(--background)] shadow-[0_20px_70px_rgba(0,0,0,0.6)] flex flex-col pointer-events-auto overflow-hidden transition-all duration-500 
-                    ${isMaximized || immersive ? 'max-w-none max-h-none h-screen rounded-none border-none' : 'max-w-5xl max-h-[85vh] rounded-lg border border-[var(--muted)]/20'}`}
+                    ${isMaximized || immersive ? 'max-w-none max-h-none h-screen rounded-none border-none' : 'max-w-5xl max-h-[90vh] sm:max-h-[85vh] rounded-lg border border-[var(--muted)]/20'}`}
             >
                 {/* Window Header */}
                 {!immersive && (
@@ -87,7 +87,7 @@ export default function Window({
                 )}
 
                 {/* Window Content */}
-                <div className={`flex-1 overflow-y-auto bg-[var(--background)] text-[var(--foreground)] transition-colors duration-500 ${immersive ? 'p-0' : 'p-6 md:p-12'}`}>
+                <div className={`flex-1 overflow-y-auto bg-[var(--background)] text-[var(--foreground)] transition-colors duration-500 ${immersive ? 'p-0' : 'p-4 md:p-12'}`}>
                     <div className={`${immersive ? 'max-w-none' : 'max-w-4xl'} mx-auto h-full`}>
                         {children}
                     </div>

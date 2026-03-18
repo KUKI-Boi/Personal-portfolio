@@ -8,7 +8,7 @@ import { Download, Mail, Palette, Gamepad2, Heart, Camera } from "lucide-react";
  */
 export default function AboutApp() {
     return (
-        <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="space-y-10 md:space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Intro Section */}
             <div className="space-y-8">
                 <div className="space-y-4">

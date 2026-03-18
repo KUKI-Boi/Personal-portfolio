@@ -4,7 +4,7 @@ import { Zap, Users } from "lucide-react";
 
 export default function VolunteeringApp() {
     return (
-        <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="space-y-10 md:space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="text-center space-y-4">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-[var(--foreground)]">Volunteering</h2>
                 <p className="text-[var(--muted)] text-sm font-black uppercase tracking-widest max-w-xl mx-auto">

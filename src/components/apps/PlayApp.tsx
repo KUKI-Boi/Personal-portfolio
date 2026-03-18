@@ -483,8 +483,8 @@ export default function PlayApp({ onImmersiveChange }: PlayAppProps) {
             {/* UI Overlays */}
             <AnimatePresence mode="wait">
                 {gameState === "INTRO" && (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-md">
-                        <div className="max-w-md w-full p-12 border border-[var(--accent)]/20 bg-black/40 rounded-3xl text-center space-y-8">
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+                        <div className="max-w-md w-full p-6 md:p-12 border border-[var(--accent)]/20 bg-black/40 rounded-3xl text-center space-y-6 md:space-y-8">
                             <h2 className="text-4xl font-black italic tracking-tighter text-[var(--accent)] text-glow">STARBLADE: COMBAT</h2>
                             <div className="space-y-4 text-left text-[11px] font-bold">
                                 <p className="text-[var(--muted)]">CONTROLS:</p>
@@ -511,12 +511,12 @@ export default function PlayApp({ onImmersiveChange }: PlayAppProps) {
                 )}
 
                 {gameState === "PLAYING" && (
-                    <div className="absolute inset-0 pointer-events-none p-8 flex flex-col justify-between z-[105]">
+                    <div className="absolute inset-0 pointer-events-none p-4 md:p-8 flex flex-col justify-between z-[105]">
                         <div className="flex justify-between items-start">
                             <div className="space-y-1">
-                                <div className="text-[10px] font-black tracking-widest text-[var(--accent)]">COMBAT OVERLAY v3.5</div>
-                                <div className="text-5xl font-black italic tracking-tighter">{score.toLocaleString()}</div>
-                                <div className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">WEAPONS: ONLINE</div>
+                                <div className="text-[8px] md:text-[10px] font-black tracking-widest text-[var(--accent)]">COMBAT OVERLAY v3.5</div>
+                                <div className="text-3xl md:text-5xl font-black italic tracking-tighter">{score.toLocaleString()}</div>
+                                <div className="text-[8px] md:text-[10px] text-blue-400 font-bold uppercase tracking-widest">WEAPONS: ONLINE</div>
                             </div>
                             <div className="flex flex-col items-end gap-2">
                                 <div className="text-[10px] font-black text-[var(--muted)] uppercase tracking-widest">HULL STABILITY</div>

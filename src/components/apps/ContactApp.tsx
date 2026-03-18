@@ -15,7 +15,7 @@ export default function ContactApp() {
     ];
 
     return (
-        <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="space-y-10 md:space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="text-center space-y-4">
                 <h2 className="text-5xl md:text-6xl font-black tracking-tighter uppercase text-[var(--foreground)]">Get in Touch</h2>
                 <p className="text-[var(--muted)] text-sm font-black uppercase tracking-widest max-w-md mx-auto">

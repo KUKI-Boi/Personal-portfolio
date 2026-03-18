@@ -28,7 +28,7 @@ const PROJECTS: Project[] = [
 
 export default function ProjectsApp() {
     return (
-        <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="space-y-10 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="text-center space-y-2">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-[var(--foreground)]">Showcasing My Work</h2>
                 <p className="text-[var(--muted)] text-sm font-black uppercase tracking-widest">A showcase of my recent work and side projects</p>
@@ -38,7 +38,7 @@ export default function ProjectsApp() {
                 {PROJECTS.map((project, index) => (
                     <div
                         key={index}
-                        className="group p-8 cosmic-glass rounded-2xl transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+                        className="group p-6 md:p-8 cosmic-glass rounded-2xl transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
                     >
                         <div className="flex flex-col md:flex-row justify-between gap-6">
                             <div className="space-y-4">

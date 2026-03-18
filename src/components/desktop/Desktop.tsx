@@ -183,7 +183,7 @@ export default function Desktop() {
             </AnimatePresence>
 
             {/* Bottom-Right Diagonal Tech Stack */}
-            <div className="absolute bottom-0 right-0 w-[600px] h-[600px] pointer-events-none z-0 overflow-hidden select-none opacity-40">
+            <div className="absolute bottom-0 right-0 w-[600px] h-[600px] pointer-events-none z-0 overflow-hidden select-none opacity-20 md:opacity-40">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[-40deg]">
                     <motion.div
                         animate={{
@@ -228,7 +228,7 @@ export default function Desktop() {
                         transition={{ duration: 1, ease: "easeOut" }}
                         className="relative"
                     >
-                        <h1 className="text-[12vw] sm:text-[10vw] md:text-[8vw] font-black leading-[0.8] tracking-tighter select-none flex flex-col items-start transition-colors duration-500">
+                        <h1 className="text-[14vw] sm:text-[10vw] md:text-[8vw] font-black leading-[0.8] tracking-tighter select-none flex flex-col items-start transition-colors duration-500">
                             <span className="text-[var(--foreground)]">LIKITH</span>
                             <span className="text-[var(--accent)]">KUMAR</span>
                         </h1>
