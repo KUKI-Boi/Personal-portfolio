@@ -9,7 +9,7 @@ function Scene() {
     const sphereRef = useRef<THREE.Mesh>(null);
     const { mouse } = useThree();
 
-    useFrame((state) => {
+    useFrame(() => {
         if (sphereRef.current) {
             // Subtle parallax following mouse
             const targetX = mouse.x * 0.5;

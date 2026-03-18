@@ -1,0 +1,41 @@
+
+> desktop-portfolio@0.1.0 lint
+> eslint
+
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\PlayApp.tsx
+    5:44  warning  'Line' is defined but never used                                                                            @typescript-eslint/no-unused-vars
+  438:8   warning  React Hook useEffect has a missing dependency: 'endGame'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\SkillsApp.tsx
+  206:35  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\SkillsApp.tsx:206:35
+  204 |                 }}
+  205 |                 transition={{
+> 206 |                     duration: 4 + Math.random() * 2,
+      |                                   ^^^^^^^^^^^^^ Cannot call impure function
+  207 |                     repeat: Infinity,
+  208 |                     ease: "easeInOut",
+  209 |                     delay: Math.random() * 2                                                                                                                                                                                         react-hooks/purity
+  209:28  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\SkillsApp.tsx:209:28
+  207 |                     repeat: Infinity,
+  208 |                     ease: "easeInOut",
+> 209 |                     delay: Math.random() * 2
+      |                            ^^^^^^^^^^^^^ Cannot call impure function
+  210 |                 }}
+  211 |                 className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-[2rem] cosmic-glass flex items-center justify-center transition-all duration-300 group-hover:shadow-[var(--skill-glow)]"
+  212 |                 style={{ '--skill-glow': `0:15px 40px ${skill.color}44` } as any}  react-hooks/purity
+  212:78  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Desktop.tsx
+  16:8  warning  'EducationApp' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 6 problems (3 errors, 3 warnings)
+

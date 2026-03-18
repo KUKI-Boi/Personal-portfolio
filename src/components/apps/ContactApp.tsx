@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Twitter, Instagram, Mail, Phone, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, ArrowUpRight } from "lucide-react";
 
 /**
  * ContactApp component
@@ -8,20 +8,18 @@ import { Github, Linkedin, Twitter, Instagram, Mail, Phone, ArrowUpRight } from 
  */
 export default function ContactApp() {
     const links = [
-        { label: "GitHub", icon: <Github size={20} />, href: "https://github.com/placeholder" },
+        { label: "GitHub", icon: <Github size={20} />, href: "https://github.com/KUKI-Boi" },
         { label: "LinkedIn", icon: <Linkedin size={20} />, href: "https://www.linkedin.com/in/likith-kumar-b-m-602ba8315/" },
-        { label: "Twitter", icon: <Twitter size={20} />, href: "#" },
-        { label: "Instagram", icon: <Instagram size={20} />, href: "#" },
-        { label: "Email", icon: <Mail size={20} />, href: "mailto:placeholder" },
+        { label: "Email", icon: <Mail size={20} />, href: "mailto:likithkumarbm@gmail.com" },
         { label: "Phone", icon: <Phone size={20} />, href: "#" },
     ];
 
     return (
         <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="text-center space-y-4">
-                <h2 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">Get in Touch</h2>
-                <p className="text-zinc-500 text-sm font-black uppercase tracking-widest max-w-md mx-auto">
-                    I'm always ready to collaborate and build things together!
+                <h2 className="text-5xl md:text-6xl font-black tracking-tighter uppercase text-[var(--foreground)]">Get in Touch</h2>
+                <p className="text-[var(--muted)] text-sm font-black uppercase tracking-widest max-w-md mx-auto">
+                    Let’s brainstorm, build, and break limits.
                 </p>
             </div>
 
@@ -30,26 +28,47 @@ export default function ContactApp() {
                     <a
                         key={idx}
                         href={link.href}
-                        target="_blank"
+                        target={link.href.startsWith('mailto:') ? undefined : "_blank"}
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-between p-6 bg-zinc-900/30 border border-white/5 rounded-2xl hover:bg-white/5 hover:border-white/10 transition-all duration-300"
+                        className="group relative flex items-center justify-between p-6 cosmic-glass rounded-2xl transition-all duration-300 overflow-hidden"
                     >
-                        <div className="flex items-center gap-4">
-                            <div className="text-zinc-500 group-hover:text-red-500 transition-colors">
-                                {link.icon}
+                        <div className="relative flex-1 h-10 overflow-hidden">
+                            {/* Icon & Label Group - Slides UP */}
+                            <div className={`flex items-center gap-4 h-full transition-all duration-500 ease-in-out ${link.label === "Phone" ? "group-hover:-translate-y-12 group-hover:opacity-0" : ""}`}>
+                                <div className="text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors">
+                                    {link.icon}
+                                </div>
+                                <span className="text-sm font-black uppercase tracking-widest text-[var(--muted)]/60 group-hover:text-[var(--foreground)]">
+                                    {link.label}
+                                </span>
                             </div>
-                            <span className="text-sm font-black uppercase tracking-widest text-zinc-400 group-hover:text-white">
-                                {link.label}
-                            </span>
+
+                            {/* Message Group - Slides UP into the SAME space */}
+                            {link.label === "Phone" && (
+                                <div className="absolute inset-0 flex items-center transition-all duration-500 ease-in-out translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+                                    <div className="flex items-center gap-3">
+                                        <div className="text-[var(--accent)] animate-pulse">
+                                            {link.icon}
+                                        </div>
+                                        <span className="text-[11px] md:text-sm font-black italic text-[var(--accent)] whitespace-nowrap tracking-tight">
+                                            Signal detected. Calling… not yet.
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        <ArrowUpRight size={16} className="text-zinc-800 group-hover:text-red-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+
+                        {/* Arrow Icon - Hide on Phone hover to give more space */}
+                        <div className={`transition-all duration-300 ${link.label === "Phone" ? "group-hover:opacity-0 group-hover:translate-x-4" : ""}`}>
+                            <ArrowUpRight size={16} className="text-[var(--muted)]/20 group-hover:text-[var(--accent)] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                        </div>
                     </a>
                 ))}
             </div>
 
             <div className="text-center pt-8">
-                <p className="text-zinc-500 text-xs font-black uppercase tracking-widest">
-                    Prefer email? <a href="mailto:placeholder" className="text-red-500 hover:text-red-400 underline underline-offset-4 px-2">Send me a message</a>
+                <p className="text-[var(--muted)]/40 text-xs font-black uppercase tracking-widest">
+                    Prefer email? <a href="mailto:likithkumarbm@gmail.com" className="text-[var(--accent)] hover:text-[var(--accent-hover)] underline underline-offset-4 px-2">Send me a message</a>
                 </p>
             </div>
         </div>

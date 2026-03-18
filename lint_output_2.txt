@@ -1,0 +1,40 @@
+
+> desktop-portfolio@0.1.0 lint
+> eslint
+
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\PlayApp.tsx
+  3:28  warning  'useCallback' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\VolunteeringApp.tsx
+  3:10  warning  'Award' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Desktop.tsx
+  67:25  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Desktop.tsx:67:25
+  65 |         }, 0);
+  66 |         const savedTheme = localStorage.getItem('portfolio-theme') as 'dark' | 'light';
+> 67 |         if (savedTheme) setTheme(savedTheme);
+     |                         ^^^^^^^^ Avoid calling setState() directly within an effect
+  68 |
+  69 |         const clockTimer = setInterval(() => {
+  70 |             setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));  react-hooks/set-state-in-effect
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Hero3D.tsx
+  12:15  warning  'state' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\PixelatedEyes.tsx
+  16:66  warning  'theme' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Widgets.tsx
+  4:39  warning  'Music' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 6 problems (1 error, 5 warnings)
+

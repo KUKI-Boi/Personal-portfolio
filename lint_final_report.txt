@@ -1,0 +1,67 @@
+
+> desktop-portfolio@0.1.0 lint
+> eslint
+
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\ContactApp.tsx
+  3:28  warning  'Twitter' is defined but never used    @typescript-eslint/no-unused-vars
+  3:37  warning  'Instagram' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\PlayApp.tsx
+   3:25  warning  'useMemo' is defined but never used          @typescript-eslint/no-unused-vars
+   5:17  warning  'Float' is defined but never used            @typescript-eslint/no-unused-vars
+   5:24  warning  'FloatProps' is defined but never used       @typescript-eslint/no-unused-vars
+   5:55  warning  'Text' is defined but never used             @typescript-eslint/no-unused-vars
+   7:10  warning  'motion' is defined but never used           @typescript-eslint/no-unused-vars
+   7:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  94:22  warning  'delta' is defined but never used            @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\apps\VolunteeringApp.tsx
+  3:10  warning  'Award' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\CosmicBackground.tsx
+   3:10  warning  'useRef' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  24:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\CosmicBackground.tsx:24:9
+  22 |
+  23 |     useEffect(() => {
+> 24 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  25 |         const handleMouseMove = (e: MouseEvent) => {
+  26 |             const x = (e.clientX / window.innerWidth) - 0.5;
+  27 |             const y = (e.clientY / window.innerHeight) - 0.5;  react-hooks/set-state-in-effect
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Desktop.tsx
+   7:8  warning  'PixelatedEyes' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  64:9  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Desktop.tsx:64:9
+  62 |
+  63 |     useEffect(() => {
+> 64 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  65 |         const savedTheme = localStorage.getItem('portfolio-theme') as 'dark' | 'light';
+  66 |         if (savedTheme) setTheme(savedTheme);
+  67 |  react-hooks/set-state-in-effect
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Hero3D.tsx
+  12:15  warning  'state' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Desktop\Personal portfolio\desktop-portfolio\src\components\desktop\Widgets.tsx
+  4:39  warning  'Music' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 16 problems (2 errors, 14 warnings)
+

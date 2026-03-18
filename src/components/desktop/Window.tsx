@@ -2,62 +2,93 @@
 
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
+import { Minus, Square, X } from "lucide-react";
 
 interface WindowProps {
     title: string;
     onClose: () => void;
+    onMinimize?: () => void;
+    onMaximize?: () => void;
     onPointerDown?: () => void;
     children: ReactNode;
+    isMaximized?: boolean;
+    immersive?: boolean;
 }
 
 /**
  * Window component
- * macOS-style window inspired by the reference site.
- * Features traffic light buttons and top navigation inside the header.
+ * Windows-style window with functional Minimize, Maximize, and Close buttons.
  */
-export default function Window({ title, onClose, onPointerDown, children }: WindowProps) {
+export default function Window({
+    title,
+    onClose,
+    onMinimize,
+    onMaximize,
+    onPointerDown,
+    children,
+    isMaximized = false,
+    immersive = false
+}: WindowProps) {
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center pointer-events-none p-4 md:p-12"
+            className={`fixed inset-0 flex items-center justify-center pointer-events-none z-50 transition-all duration-300 ${isMaximized || immersive ? 'p-0' : 'p-4 md:p-12'} ${immersive ? 'z-[100]' : ''}`}
             onPointerDown={onPointerDown}
         >
             <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
+                animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    width: isMaximized || immersive ? "100%" : "auto",
+                    height: isMaximized || immersive ? "100%" : "auto"
+                }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="w-full max-w-5xl max-h-[80vh] glass-window rounded-xl shadow-[0_30px_100px_rgba(0,0,0,0.8)] flex flex-col pointer-events-auto overflow-hidden border border-white/5"
+                className={`w-full bg-[var(--background)] shadow-[0_20px_70px_rgba(0,0,0,0.6)] flex flex-col pointer-events-auto overflow-hidden transition-all duration-500 
+                    ${isMaximized || immersive ? 'max-w-none max-h-none h-screen rounded-none border-none' : 'max-w-5xl max-h-[85vh] rounded-lg border border-[var(--muted)]/20'}`}
             >
                 {/* Window Header */}
-                <div className="h-12 bg-black flex items-center justify-between px-4 border-b border-white/5 select-none shrink-0">
-                    <div className="flex items-center gap-6">
-                        <div className="flex gap-2">
-                            <button onClick={onClose} className="btn-red hover:brightness-110 transition-all shadow-[0_0_5px_rgba(255,95,87,0.3)]" />
-                            <div className="btn-yellow opacity-50" />
-                            <div className="btn-green opacity-50" />
-                        </div>
-
-                        <div className="flex items-center gap-1">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">
+                {!immersive && (
+                    <div className="h-10 bg-[var(--card)] flex items-center justify-between px-4 border-b border-[var(--muted)]/10 select-none shrink-0 transition-colors duration-500">
+                        <div className="flex items-center gap-3">
+                            <span className="text-[11px] font-bold uppercase tracking-widest text-[var(--muted)] transition-colors duration-500">
                                 {title}
                             </span>
                         </div>
-                    </div>
 
-                    {/* Reference-style Internal Nav */}
-                    <div className="hidden md:flex items-center gap-6 text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">
-                        <button className="hover:text-white transition-colors">Experience</button>
-                        <button className="hover:text-white transition-colors">Projects</button>
-                        <button className="hover:text-white transition-colors">Skills</button>
-                        <button className="hover:text-white transition-colors">Contact</button>
+                        <div className="flex items-center cosmic-glass rounded-full px-2 py-1 gap-1 border border-[var(--muted)]/10">
+                            <motion.button
+                                onClick={onMinimize}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                className="h-7 w-8 flex items-center justify-center cosmic-button"
+                            >
+                                <Minus size={12} strokeWidth={2.5} />
+                            </motion.button>
+                            <motion.button
+                                onClick={onMaximize}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                className="h-7 w-8 flex items-center justify-center cosmic-button"
+                            >
+                                <Square size={10} strokeWidth={2.5} />
+                            </motion.button>
+                            <motion.button
+                                onClick={onClose}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                className="h-7 w-8 flex items-center justify-center cosmic-button group/close"
+                            >
+                                <X size={14} strokeWidth={2.5} className="group-hover/close:text-red-400 transition-colors" />
+                            </motion.button>
+                        </div>
                     </div>
-
-                    <div className="w-16" /> {/* Spacer for symmetry */}
-                </div>
+                )}
 
                 {/* Window Content */}
-                <div className="flex-1 overflow-y-auto bg-black p-6 md:p-12 text-white">
-                    <div className="max-w-4xl mx-auto h-full">
+                <div className={`flex-1 overflow-y-auto bg-[var(--background)] text-[var(--foreground)] transition-colors duration-500 ${immersive ? 'p-0' : 'p-6 md:p-12'}`}>
+                    <div className={`${immersive ? 'max-w-none' : 'max-w-4xl'} mx-auto h-full`}>
                         {children}
                     </div>
                 </div>

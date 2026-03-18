@@ -7,15 +7,16 @@ interface DockProps {
     onAppClick: (id: AppId) => void;
     activeApp: AppId | null;
     openApps: AppId[];
+    minimizedApps: AppId[];
 }
 
 /**
  * Dock component
- * Centered pill-shaped dock inspired by macOS and the reference site.
+ * Centered pill-shaped dock with Deep Indigo theme and Amber accents.
  */
-export default function Dock({ onAppClick, activeApp, openApps }: DockProps) {
+export default function Dock({ onAppClick, activeApp, openApps, minimizedApps }: DockProps) {
     return (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[1000] px-3 py-3 dock-blur rounded-3xl flex items-center gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="max-w-[calc(100vw-2rem)] px-3 py-2 md:py-3 bg-[var(--card)]/80 backdrop-blur-xl border border-[var(--muted)]/10 rounded-3xl flex items-center gap-1 md:gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-colors duration-500 pointer-events-auto overflow-x-auto no-scrollbar">
             {APPS.map((app) => {
                 const isActive = activeApp === app.id;
                 const isOpen = openApps.includes(app.id);
@@ -24,26 +25,30 @@ export default function Dock({ onAppClick, activeApp, openApps }: DockProps) {
                     <button
                         key={app.id}
                         onClick={() => onAppClick(app.id)}
-                        className="group relative"
+                        className="group relative shrink-0"
                         aria-label={`Open ${app.label}`}
                     >
                         <motion.div
                             whileHover={{ scale: 1.2, y: -10 }}
                             className={`
-                w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300
-                ${isActive ? 'bg-white/10 text-white' : 'text-zinc-500 hover:text-white'}
-              `}
+                                w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
+                                ${isActive ? 'bg-[var(--accent)] text-[var(--background)]' : 'text-[var(--muted)] hover:text-[var(--accent)]'}
+                                ${minimizedApps.includes(app.id) ? 'opacity-40 grayscale-[0.5]' : 'opacity-100'}
+                            `}
                         >
-                            {app.icon}
+                            {/* Scale icon based on container size */}
+                            <div className="scale-90 md:scale-100">
+                                {app.icon}
+                            </div>
                         </motion.div>
 
                         {/* Open indicator dot */}
                         {isOpen && (
-                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full shadow-[0_0_5px_#fff]" />
+                            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[var(--accent)] rounded-full shadow-[0_0_5px_rgba(244,162,97,0.5)]" />
                         )}
 
                         {/* Tooltip */}
-                        <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-black text-[10px] font-black uppercase text-white rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-white/10">
+                        <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-[var(--card)] text-[10px] font-black uppercase text-[var(--foreground)] rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[var(--muted)]/10 whitespace-nowrap">
                             {app.label}
                         </div>
                     </button>

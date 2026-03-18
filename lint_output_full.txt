@@ -1,0 +1,14 @@
+
+> desktop-portfolio@0.1.0 lint
+> eslint
+
+
+D:\Desktop\Personal projects\Personal portfolio\desktop-portfolio\src\components\apps\PlayApp.tsx
+    5:44  warning  'Line' is defined but never used                                                                            @typescript-eslint/no-unused-vars
+  438:8   warning  React Hook useEffect has a missing dependency: 'endGame'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Desktop\Personal projects\Personal portfolio\desktop-portfolio\src\components\desktop\Desktop.tsx
+  16:8  warning  'EducationApp' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 3 problems (0 errors, 3 warnings)
+

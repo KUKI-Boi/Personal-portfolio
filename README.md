@@ -46,4 +46,4 @@ The build will be available in the `.next` folder.
 
 ## Author
 
-**Likith** - Senior Frontend Engineer
+**Likith** 

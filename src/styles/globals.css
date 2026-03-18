@@ -6,34 +6,99 @@
 
 /* Reference-Style Design Tokens */
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #1B1F4A;
+  --foreground: #E6E6F0;
 
-  --card: #0a0a0a;
-  --card-foreground: #ffffff;
+  /* Cosmic Glass System */
+  .cosmic-glass {
+    background: linear-gradient(135deg, rgba(82, 70, 229, 0.4) 0%, rgba(27, 31, 74, 0.9) 100%);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(184, 185, 230, 0.2);
+    box-shadow:
+      0 8px 32px -4px rgba(0, 0, 0, 0.6),
+      inset 0 0 16px rgba(184, 185, 230, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
 
-  --popover: #0a0a0a;
-  --popover-foreground: #ffffff;
+  .cosmic-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 30% 50%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 50% 10%, #fff, transparent),
+      radial-gradient(1px 1px at 70% 80%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 90% 40%, #fff, transparent),
+      radial-gradient(1px 1px at 25% 75%, #fff, transparent),
+      radial-gradient(1px 1px at 85% 15%, #fff, transparent);
+    background-size: 150px 150px;
+    opacity: 0.25;
+    pointer-events: none;
+  }
 
-  --primary: #ffffff;
-  --primary-foreground: #000000;
+  /* Internal radial glow for cosmic effect */
+  .bg-radial-glow {
+    background: radial-gradient(circle at center, rgba(184, 185, 230, 0.4) 0%, transparent 70%);
+  }
 
-  --secondary: #111111;
-  --secondary-foreground: #ffffff;
+  .cosmic-glow {
+    filter: drop-shadow(0 0 8px rgba(184, 185, 230, 0.6));
+  }
 
-  --muted: #111111;
-  --muted-foreground: #888888;
+  .cosmic-button {
+    @apply transition-all duration-300;
+    color: #D1D5FF;
+    /* Soft neon lavender */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
 
-  --accent: #ff0000;
-  /* Stipple statue style red accent */
-  --accent-foreground: #ffffff;
+  .cosmic-button:hover {
+    @apply scale-110;
+    filter: drop-shadow(0 0 10px rgba(209, 213, 255, 0.8));
+    color: #FFFFFF;
+  }
 
-  --destructive: #ff4444;
-  --destructive-foreground: #ffffff;
+  .cosmic-button:active {
+    @apply scale-90;
+    opacity: 0.7;
+  }
 
-  --border: #222222;
-  --input: #111111;
-  --ring: #ffffff;
+  --muted: #B8B9E6;
+  --accent: #F4A261;
+  --accent-hover: #E08B3A;
+  --heading: #E6E6F0;
+
+  --card: #25295A;
+  --card-foreground: #E6E6F0;
+  --border: rgba(184, 185, 230, 0.1);
+  --header-bg: rgba(0, 0, 0, 0.5);
+  --selection-bg: rgba(244, 162, 97, 0.3);
+}
+
+.theme-light {
+  --background: #F8F9FD;
+  --foreground: #1B1F4A;
+  /* Deepest Indigo */
+  --muted: #565B94;
+  /* Significantly darker for readability */
+  --accent: #8B4513;
+  /* Darker accent for contrast */
+  --accent-hover: #654321;
+  --heading: #1B1F4A;
+
+  --card: #E8EAF6;
+  /* More distinct from background */
+  --card-foreground: #1B1F4A;
+  --border: #D1D5F0;
+  /* Visible borders */
+  --header-bg: rgba(232, 234, 246, 0.95);
+  /* Increased opacity */
+  --selection-bg: rgba(139, 69, 19, 0.2);
 }
 
 body {
@@ -94,6 +159,15 @@ body {
   background: rgba(15, 15, 15, 0.8);
   backdrop-filter: blur(30px);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Custom Scrollbar */
