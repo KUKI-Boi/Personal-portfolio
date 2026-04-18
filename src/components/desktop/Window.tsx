@@ -40,13 +40,13 @@ export default function Window({
                     opacity: 1,
                     scale: 1,
                     y: 0,
-                    width: isMaximized || immersive ? "100%" : "auto",
-                    height: isMaximized || immersive ? "100%" : "auto"
+                    width: "100%",
+                    height: "100%"
                 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className={`w-full bg-[var(--background)] shadow-[0_20px_70px_rgba(0,0,0,0.6)] flex flex-col pointer-events-auto overflow-hidden transition-all duration-500 
-                    ${isMaximized || immersive ? 'max-w-none max-h-none h-screen rounded-none border-none' : 'max-w-5xl max-h-[90vh] sm:max-h-[85vh] rounded-lg border border-[var(--muted)]/20'}`}
+                className={`w-full h-full bg-[var(--background)] shadow-[0_20px_70px_rgba(0,0,0,0.6)] flex flex-col pointer-events-auto overflow-hidden transition-all duration-500 
+                    ${isMaximized || immersive ? 'max-w-none max-h-none rounded-none border-none' : 'max-w-5xl max-h-[85vh] rounded-lg border border-[var(--muted)]/20'}`}
             >
                 {/* Window Header */}
                 {!immersive && (

@@ -6,23 +6,34 @@ interface Project {
     title: string;
     description: string;
     tags: string[];
+    sourceUrl?: string;
+    previewUrl?: string;
 }
 
 const PROJECTS: Project[] = [
     {
-        title: "Collision-Free Vehicle Overtaking",
-        description: "MATLAB simulation modeling safe overtaking maneuvers using state-based logic.",
-        tags: ["MATLAB", "Logic", "Sim"]
+        title: "Altitude Hold Controller",
+        description: "A controller system designed for maintaining stable UAV altitude.",
+        tags: ["Control Systems", "UAV", "MATLAB"],
+        sourceUrl: "https://github.com/KUKI-Boi/altitude-hold-controller.git"
     },
     {
-        title: "IoT Fire Alerting System",
-        description: "Detection system using ESP32 to monitor fire hazards and provide real-time alerts.",
-        tags: ["ESP32", "IoT", "C++"]
+        title: "Solar Battery Charging System",
+        description: "Simulation and management system for solar battery charging dynamics.",
+        tags: ["Power Systems", "Simulink", "Energy"],
+        sourceUrl: "https://github.com/KUKI-Boi/Solar-Battery-Charging-System.git"
     },
     {
-        title: "HR Email Automation",
-        description: "Automated rejection workflows for applicants using Google Sheets and Apps Script.",
-        tags: ["Apps Script", "Automation"]
+        title: "Y-bus Matrix Builder",
+        description: "Computational tool tailored for generating Y-bus matrices in power system analysis.",
+        tags: ["Power Systems", "Matrix", "Algorithm"],
+        sourceUrl: "https://github.com/KUKI-Boi/Y-bus-Matrix-Builder.git"
+    },
+    {
+        title: "Z-bus Matrix Builder",
+        description: "Analytical builder for deriving Z-bus matrices used in fault analysis algorithms.",
+        tags: ["Fault Analysis", "Power Systems", "Algorithm"],
+        sourceUrl: "https://github.com/KUKI-Boi/zbus-matrix-builder.git"
     },
 ];
 
@@ -57,12 +68,16 @@ export default function ProjectsApp() {
                                 </p>
 
                                 <div className="flex items-center gap-4 pt-2">
-                                    <button className="px-5 py-2 cosmic-glass cosmic-button rounded-xl text-[10px] font-black uppercase tracking-widest transition-all gap-2">
-                                        <ExternalLink size={12} className="relative z-10" /> <span className="relative z-10">Preview</span>
-                                    </button>
-                                    <button className="px-5 py-2 cosmic-glass cosmic-button rounded-xl text-[10px] font-black uppercase tracking-widest transition-all gap-2">
-                                        <Github size={12} className="relative z-10" /> <span className="relative z-10">Source</span>
-                                    </button>
+                                    {project.previewUrl && (
+                                        <a href={project.previewUrl} target="_blank" rel="noopener noreferrer" className="px-5 py-2 cosmic-glass cosmic-button rounded-xl text-[10px] font-black uppercase tracking-widest transition-all gap-2">
+                                            <ExternalLink size={12} className="relative z-10" /> <span className="relative z-10">Preview</span>
+                                        </a>
+                                    )}
+                                    {project.sourceUrl && (
+                                        <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="px-5 py-2 cosmic-glass cosmic-button rounded-xl text-[10px] font-black uppercase tracking-widest transition-all gap-2">
+                                            <Github size={12} className="relative z-10" /> <span className="relative z-10">Source</span>
+                                        </a>
+                                    )}
                                 </div>
                             </div>
 

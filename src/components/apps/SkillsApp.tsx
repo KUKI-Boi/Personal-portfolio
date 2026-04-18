@@ -4,7 +4,7 @@ import { Cpu, Globe, Terminal, Layers } from "lucide-react";
 
 interface SkillItem {
     name: string;
-    icon: string;
+    iconUrl: string;
 }
 
 interface SkillCategory {
@@ -14,27 +14,30 @@ interface SkillCategory {
 
 const SKILL_CATEGORIES: SkillCategory[] = [
     {
-        title: "Languages",
+        title: "Web Technologies",
         skills: [
-            { name: "C", icon: "C" },
-            { name: "C++", icon: "C++" },
-            { name: "JavaScript", icon: "JS" },
-            { name: "TypeScript", icon: "TS" }
+            { name: "Next.js", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
+            { name: "React", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+            { name: "Three.js", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg" },
+            { name: "JavaScript", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" }
         ]
     },
     {
-        title: "Frontend",
+        title: "Engineering & Auto",
         skills: [
-            { name: "React", icon: "RE" },
-            { name: "Next.js", icon: "NX" },
-            { name: "Tailwind", icon: "TW" }
+            { name: "MATLAB", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg" },
+            { name: "C++", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" },
+            { name: "Python", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
+            { name: "Arduino", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" }
         ]
     },
     {
-        title: "Backend",
+        title: "Core Fundamentals",
         skills: [
-            { name: "Node.js", icon: "NO" },
-            { name: "Express", icon: "EX" }
+            { name: "HTML5", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+            { name: "CSS3", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
+            { name: "Tailwind CSS", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+            { name: "C Language", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" }
         ]
     }
 ];
@@ -57,8 +60,14 @@ export default function SkillsApp() {
                         <div className="grid grid-cols-4 gap-4">
                             {category.skills.map((skill) => (
                                 <div key={skill.name} className="group flex flex-col items-center gap-3">
-                                    <div className="w-14 h-14 rounded-2xl cosmic-glass flex items-center justify-center text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:shadow-[0_0_25px_rgba(244,162,97,0.2)] transition-all duration-300">
-                                        <span className="text-xs font-black relative z-10">{skill.icon}</span>
+                                    <div className="w-14 h-14 rounded-2xl cosmic-glass flex items-center justify-center p-3 text-[var(--muted)] group-hover:shadow-[0_0_25px_rgba(244,162,97,0.2)] transition-all duration-300">
+                                        <img 
+                                            src={skill.iconUrl} 
+                                            alt={`${skill.name} logo`} 
+                                            className="w-full h-full object-contain filter group-hover:scale-110 drop-shadow-md transition-all duration-300"
+                                            // Handle Next.js dark svg inversions using css class dynamically if necessary
+                                            style={skill.name === "Next.js" ? { filter: "invert(1) brightness(2)" } : {}}
+                                        />
                                     </div>
                                     <span className="text-[8px] font-black uppercase tracking-widest text-[var(--muted)]/40 group-hover:text-[var(--accent)] transition-colors relative z-10">
                                         {skill.name}

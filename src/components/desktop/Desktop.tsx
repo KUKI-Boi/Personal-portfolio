@@ -14,7 +14,7 @@ import ProjectsApp from "../apps/ProjectsApp";
 import ContactApp from "../apps/ContactApp";
 import SkillsApp from "../apps/SkillsApp";
 import PlayApp from "../apps/PlayApp";
-import EducationApp from "../apps/EducationApp";
+import ExperienceApp from "../apps/ExperienceApp";
 import VolunteeringApp from "../apps/VolunteeringApp";
 
 import {
@@ -27,10 +27,11 @@ import {
     Zap,
     Search,
     Sun,
-    Moon
+    Moon,
+    Briefcase
 } from "lucide-react";
 
-export type AppId = "about" | "projects" | "contact" | "skills" | "volunteering" | "education" | "play";
+export type AppId = "about" | "projects" | "contact" | "skills" | "volunteering" | "experience" | "play";
 
 export interface AppConfig {
     id: AppId;
@@ -43,7 +44,7 @@ export const APPS: AppConfig[] = [
     { id: "projects", label: "Projects", icon: <Folder size={24} /> },
     { id: "skills", label: "Skills", icon: <Cpu size={24} /> },
     { id: "contact", label: "Contact", icon: <Mail size={24} /> },
-    { id: "education", label: "Terminal", icon: <Terminal size={24} /> },
+    { id: "experience", label: "Experience", icon: <Briefcase size={24} /> },
     { id: "volunteering", label: "Outreach", icon: <Zap size={24} /> },
     { id: "play", label: "Play", icon: <Gamepad size={24} /> },
 ];
@@ -290,7 +291,7 @@ export default function Desktop() {
                                 {appId === "skills" && <SkillsApp />}
                                 {appId === "contact" && <ContactApp />}
                                 {appId === "volunteering" && <VolunteeringApp />}
-                                {appId === "education" && <EducationApp />}
+                                {appId === "experience" && <ExperienceApp />}
                                 {appId === "play" && <PlayApp onImmersiveChange={setIsImmersive} />}
                             </Window>
                         </div>

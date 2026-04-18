@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/Personal-portfolio',
+  // basePath: '/Personal-portfolio',
 };
 
 export default nextConfig;
