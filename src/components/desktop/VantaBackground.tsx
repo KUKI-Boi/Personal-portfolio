@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 // We need to disable SSR for this component or at least the import,
@@ -11,19 +11,18 @@ interface VantaBackgroundProps {
 }
 
 export default function VantaBackground({ theme }: VantaBackgroundProps) {
-    const [vantaEffect, setVantaEffect] = useState<any>(null);
+    const vantaEffect = useRef<any>(null);
     const vantaRef = useRef<HTMLDivElement>(null);
 
+    // Initialize or update the Vanta effect
     useEffect(() => {
-        let effect: any = null;
-
         const initVanta = async () => {
-            if (!vantaEffect && vantaRef.current) {
+            if (!vantaEffect.current && vantaRef.current) {
                 try {
                     // Dynamically import to avoid SSR issues with window/document
                     // @ts-expect-error - vanta lacks type definitions
                     const RINGS = (await import('vanta/dist/vanta.rings.min')).default;
-                    effect = RINGS({
+                    vantaEffect.current = RINGS({
                         el: vantaRef.current,
                         THREE,
                         mouseControls: true,
@@ -37,20 +36,31 @@ export default function VantaBackground({ theme }: VantaBackgroundProps) {
                         backgroundColor: theme === 'dark' ? 0x111111 : 0xffffff,
                         color: theme === 'dark' ? 0x888888 : 0x333333,
                     });
-                    setVantaEffect(effect);
                 } catch (error) {
                     console.error("Vanta initialization failed:", error);
                 }
             }
         };
 
-        initVanta();
+        if (vantaEffect.current) {
+            vantaEffect.current.setOptions({
+                backgroundColor: theme === 'dark' ? 0x111111 : 0xffffff,
+                color: theme === 'dark' ? 0x888888 : 0x333333,
+            });
+        } else {
+            initVanta();
+        }
+    }, [theme]);
 
+    // Cleanup on unmount
+    useEffect(() => {
         return () => {
-            if (effect) effect.destroy();
-            if (vantaEffect) vantaEffect.destroy();
+            if (vantaEffect.current) {
+                vantaEffect.current.destroy();
+                vantaEffect.current = null;
+            }
         };
-    }, [theme]); // Re-initialize when theme changes to update colors
+    }, []);
 
     return (
         <div 
