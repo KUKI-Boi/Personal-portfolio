@@ -34,8 +34,9 @@ export default function VantaBackground({ theme }: VantaBackgroundProps) {
                         scale: 1.00,
                         scaleMobile: 1.00,
                         // Customize colors based on theme if desired
-                        backgroundColor: theme === 'dark' ? 0x111111 : 0xffffff,
-                        color: theme === 'dark' ? 0x888888 : 0x333333,
+                        backgroundColor: theme === 'dark' ? 0x1B1F4A : 0xF8F9FD,
+                        color: theme === 'dark' ? 0xF4A261 : 0x1B1F4A,
+                        backgroundAlpha: 1.0,
                     });
                     setVantaEffect(effect);
                 } catch (error) {
