@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Window from "./Window";
 import Dock from "./Dock";
+import VantaBackground from "./VantaBackground";
 import CosmicBackground from "./CosmicBackground";
 import { CalendarWidget, InfoWidget } from "./Widgets";
 
@@ -212,11 +213,8 @@ export default function Desktop() {
                 </div>
             </div>
 
-            {/* Cosmic Background */}
-            <CosmicBackground
-                imageSrc={theme === 'dark' ? '/cosmic-bg.jpg' : '/cosmic-light-bg.png'}
-                theme={theme}
-            />
+            {/* Vanta Rings Background */}
+            <VantaBackground theme={theme} />
 
             {/* Top-Left Identity Section */}
             <div className="relative z-10 flex flex-col items-start justify-start h-full px-8 md:px-16 pt-32 md:pt-40 pointer-events-none">
