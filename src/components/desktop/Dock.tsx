@@ -32,6 +32,7 @@ export default function Dock({ onAppClick, activeApp, openApps, minimizedApps }:
                             whileHover={{ scale: 1.2, y: -10 }}
                             className={`
                                 w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
+                                ${app.id === 'play' ? 'dock-play-badge' : ''}
                                 ${isActive ? 'bg-[var(--accent)] text-[var(--background)]' : 'text-[var(--muted)] hover:text-[var(--accent)]'}
                                 ${minimizedApps.includes(app.id) ? 'opacity-40 grayscale-[0.5]' : 'opacity-100'}
                             `}

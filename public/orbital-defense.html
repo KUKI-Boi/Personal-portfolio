@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Orbital Defense</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+  #orbital-defense {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+  }
+  canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
+</head>
+<body>
+<section id="orbital-defense">
+  <canvas id="canvas"></canvas>
+</section>
+
+<script>
+(function() {
+  "use strict";
+
+  // ─── CONSTANTS ───────────────────────────────────────────────────────────────
+  const PLANET_RADIUS       = 40;
+  const PLANET_GLOW_RADIUS  = 60;
+  const SHIELD_ORBIT_RADIUS = 70;
+  const SHIELD_ARC          = Math.PI * 0.35;  // radians of shield arc
+  const SHIELD_WIDTH        = 10;
+  const ASTEROID_SPAWN_RATE = 120;              // frames between spawns (decreases)
+  const ASTEROID_BASE_SPEED = 0.7;
+  const ASTEROID_SPEED_RAMP = 0.04;            // speed increase per 10 kills
+  const MAX_ASTEROID_VERTS  = 9;
+  const MIN_ASTEROID_VERTS  = 6;
+  const ASTEROID_RADIUS     = 18;
+  const PARTICLE_COUNT      = 22;
+  const PARTICLE_LIFETIME   = 45;              // frames
+  const MAX_LIVES           = 3;
+  const HUD_FONT            = "'Courier New', monospace";
+  const STAR_COUNT          = 180;
+  const SPEED_RAMP_INTERVAL = 10;             // kills before ramping speed
+
+  // ─── STATE ───────────────────────────────────────────────────────────────────
+  let canvas, ctx, W, H, cx, cy;
+  let gameState    = "idle";   // idle | playing | gameover
+  let score        = 0;
+  let kills        = 0;
+  let lives        = MAX_LIVES;
+  let shieldAngle  = 0;
+  let frame        = 0;
+  let spawnTimer   = 0;
+  let asteroids    = [];
+  let particles    = [];
+  let stars        = [];
+  let lastTime     = 0;
+  let animId       = null;
+
+  // ─── SETUP ───────────────────────────────────────────────────────────────────
+  function init() {
+    canvas = document.getElementById("canvas");
+    ctx    = canvas.getContext("2d");
+    resize();
+    generateStars();
+    attachEvents();
+    requestAnimationFrame(loop);
+  }
+
+  function resize() {
+    const section = document.getElementById("orbital-defense");
+    const w = section.clientWidth;
+    const h = section.clientHeight;
+
+    // Maintain 4:3 aspect ratio
+    let cw = w, ch = h;
+    if (w / h > 4 / 3) { cw = h * 4 / 3; } else { ch = w * 3 / 4; }
+
+    canvas.width  = cw;
+    canvas.height = ch;
+    W  = cw;
+    H  = ch;
+    cx = W / 2;
+    cy = H / 2;
+    generateStars();
+  }
+
+  function generateStars() {
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x:    Math.random() * W,
+        y:    Math.random() * H,
+        r:    Math.random() * 1.4 + 0.2,
+        // Twinkle offset
+        phase: Math.random() * Math.PI * 2,
+      });
+    }
+  }
+
+  // ─── EVENT BINDINGS ──────────────────────────────────────────────────────────
+  function attachEvents() {
+    canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("touchmove",  onTouch, { passive: false });
+    canvas.addEventListener("touchstart", onTouch, { passive: false });
+    canvas.addEventListener("click", onClick);
+    canvas.addEventListener("touchend", onClick);
+    window.addEventListener("resize", resize);
+  }
+
+  function onMouseMove(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx   = e.clientX - rect.left;
+    const my   = e.clientY - rect.top;
+    shieldAngle = Math.atan2(my - cy, mx - cx);
+  }
+
+  function onTouch(e) {
+    e.preventDefault();
+    const rect  = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const mx    = touch.clientX - rect.left;
+    const my    = touch.clientY - rect.top;
+    shieldAngle = Math.atan2(my - cy, mx - cx);
+  }
+
+  function onClick() {
+    if (gameState === "idle" || gameState === "gameover") startGame();
+  }
+
+  // ─── GAME LIFECYCLE ──────────────────────────────────────────────────────────
+  function startGame() {
+    score      = 0;
+    kills      = 0;
+    lives      = MAX_LIVES;
+    asteroids  = [];
+    particles  = [];
+    spawnTimer = 0;
+    frame      = 0;
+    gameState  = "playing";
+  }
+
+  function endGame() {
+    gameState = "gameover";
+  }
+
+  // ─── ASTEROID FACTORY ────────────────────────────────────────────────────────
+  function spawnAsteroid() {
+    const edge   = Math.floor(Math.random() * 4);
+    let sx, sy;
+    const margin = ASTEROID_RADIUS + 10;
+
+    switch (edge) {
+      case 0: sx = Math.random() * W; sy = -margin;       break; // top
+      case 1: sx = W + margin;        sy = Math.random() * H; break; // right
+      case 2: sx = Math.random() * W; sy = H + margin;    break; // bottom
+      default: sx = -margin;          sy = Math.random() * H; break; // left
+    }
+
+    // Direction toward centre with slight randomness
+    const ang  = Math.atan2(cy - sy, cx - sx) + (Math.random() - 0.5) * 0.4;
+    const speedMult = 1 + Math.floor(kills / SPEED_RAMP_INTERVAL) * ASTEROID_SPEED_RAMP;
+    const speed = (ASTEROID_BASE_SPEED + Math.random() * 0.3) * speedMult;
+
+    // Build irregular polygon vertices
+    const verts = MIN_ASTEROID_VERTS + Math.floor(Math.random() * (MAX_ASTEROID_VERTS - MIN_ASTEROID_VERTS + 1));
+    const pts   = [];
+    for (let i = 0; i < verts; i++) {
+      const a = (i / verts) * Math.PI * 2;
+      const r = ASTEROID_RADIUS * (0.65 + Math.random() * 0.55);
+      pts.push({ x: Math.cos(a) * r, y: Math.sin(a) * r });
+    }
+
+    asteroids.push({
+      x:        sx,
+      y:        sy,
+      vx:       Math.cos(ang) * speed,
+      vy:       Math.sin(ang) * speed,
+      rot:      Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.06,
+      pts:      pts,
+      radius:   ASTEROID_RADIUS,
+      alive:    true,
+    });
+  }
+
+  // ─── PARTICLE FACTORY ────────────────────────────────────────────────────────
+  const PARTICLE_COLORS = ["#ff9900", "#ffffff", "#00eeff", "#ffcc44", "#ff4400"];
+
+  function spawnParticles(x, y) {
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const ang   = Math.random() * Math.PI * 2;
+      const speed = 1.5 + Math.random() * 3.5;
+      particles.push({
+        x, y,
+        vx:       Math.cos(ang) * speed,
+        vy:       Math.sin(ang) * speed,
+        life:     PARTICLE_LIFETIME,
+        maxLife:  PARTICLE_LIFETIME,
+        r:        1.5 + Math.random() * 2.5,
+        color:    PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)],
+      });
+    }
+  }
+
+  // ─── COLLISION DETECTION ─────────────────────────────────────────────────────
+  /**
+   * Check if point (px,py) lies near an arc segment.
+   * Arc is centred at (cx,cy), at radius orbitR, spanning
+   * from (angle - halfArc) to (angle + halfArc).
+   * Returns true if within the arc band and angular range.
+   */
+  function circleHitsShield(ax, ay, ar) {
+    const dx   = ax - cx;
+    const dy   = ay - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    // Must be within shield band
+    const inner = SHIELD_ORBIT_RADIUS - SHIELD_WIDTH / 2 - ar;
+    const outer = SHIELD_ORBIT_RADIUS + SHIELD_WIDTH / 2 + ar;
+    if (dist < inner || dist > outer) return false;
+
+    // Must be within angular sweep
+    const aAng  = Math.atan2(dy, dx);
+    let   delta = aAng - shieldAngle;
+    // Normalise to [-π, π]
+    while (delta >  Math.PI) delta -= Math.PI * 2;
+    while (delta < -Math.PI) delta += Math.PI * 2;
+
+    return Math.abs(delta) <= SHIELD_ARC / 2 + 0.15;
+  }
+
+  function circleHitsPlanet(ax, ay, ar) {
+    const dx = ax - cx;
+    const dy = ay - cy;
+    return Math.sqrt(dx * dx + dy * dy) < PLANET_RADIUS + ar;
+  }
+
+  // ─── UPDATE ──────────────────────────────────────────────────────────────────
+  function update(dt) {
+    frame++;
+    score += 1;
+
+    // Spawn interval shortens every SPEED_RAMP_INTERVAL kills
+    const spawnInterval = Math.max(40, ASTEROID_SPAWN_RATE - Math.floor(kills / SPEED_RAMP_INTERVAL) * 12);
+    spawnTimer++;
+    if (spawnTimer >= spawnInterval) {
+      spawnTimer = 0;
+      spawnAsteroid();
+    }
+
+    // Update asteroids
+    for (let i = asteroids.length - 1; i >= 0; i--) {
+      const a = asteroids[i];
+      a.x   += a.vx;
+      a.y   += a.vy;
+      a.rot += a.rotSpeed;
+
+      // Shield collision
+      if (circleHitsShield(a.x, a.y, a.radius)) {
+        spawnParticles(a.x, a.y);
+        asteroids.splice(i, 1);
+        kills++;
+        score += 100;
+        continue;
+      }
+
+      // Planet collision
+      if (circleHitsPlanet(a.x, a.y, a.radius)) {
+        spawnParticles(a.x, a.y);
+        asteroids.splice(i, 1);
+        lives--;
+        if (lives <= 0) { endGame(); return; }
+        continue;
+      }
+    }
+
+    // Update particles
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x    += p.vx;
+      p.y    += p.vy;
+      p.vx   *= 0.96;
+      p.vy   *= 0.96;
+      p.life--;
+      if (p.life <= 0) particles.splice(i, 1);
+    }
+  }
+
+  // ─── DRAW ────────────────────────────────────────────────────────────────────
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Space background
+    ctx.fillStyle = "#06050f";
+    ctx.fillRect(0, 0, W, H);
+
+    // Stars
+    const t = frame * 0.02;
+    for (const s of stars) {
+      const alpha = 0.4 + 0.5 * Math.abs(Math.sin(s.phase + t));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200,220,255,${alpha.toFixed(2)})`;
+      ctx.fill();
+    }
+
+    if (gameState === "playing" || gameState === "gameover") {
+      drawPlanet();
+      drawShield();
+      drawAsteroids();
+      drawParticles();
+      drawHUD();
+    }
+
+    if (gameState === "idle")     drawIdle();
+    if (gameState === "gameover") drawGameOver();
+  }
+
+  // ─── PLANET ──────────────────────────────────────────────────────────────────
+  function drawPlanet() {
+    // Atmospheric glow
+    const glow = ctx.createRadialGradient(cx, cy, PLANET_RADIUS * 0.5, cx, cy, PLANET_GLOW_RADIUS);
+    glow.addColorStop(0,   "rgba(80,140,255,0.25)");
+    glow.addColorStop(0.6, "rgba(40,80,200,0.10)");
+    glow.addColorStop(1,   "rgba(0,0,80,0.00)");
+    ctx.beginPath();
+    ctx.arc(cx, cy, PLANET_GLOW_RADIUS, 0, Math.PI * 2);
+    ctx.fillStyle = glow;
+    ctx.fill();
+
+    // Planet surface
+    const surf = ctx.createRadialGradient(cx - 10, cy - 10, 2, cx, cy, PLANET_RADIUS);
+    surf.addColorStop(0,   "#9ad4ff");
+    surf.addColorStop(0.4, "#3a80d8");
+    surf.addColorStop(0.8, "#1a3a88");
+    surf.addColorStop(1,   "#0a1845");
+    ctx.beginPath();
+    ctx.arc(cx, cy, PLANET_RADIUS, 0, Math.PI * 2);
+    ctx.fillStyle = surf;
+    ctx.fill();
+
+    // Subtle ring
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, PLANET_RADIUS * 1.6, PLANET_RADIUS * 0.28, Math.PI * 0.15, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(100,180,255,0.18)";
+    ctx.lineWidth   = 4;
+    ctx.stroke();
+
+    // Life dots below planet
+    for (let i = 0; i < MAX_LIVES; i++) {
+      const ox = (i - (MAX_LIVES - 1) / 2) * 16;
+      ctx.beginPath();
+      ctx.arc(cx + ox, cy + PLANET_RADIUS + 14, 5, 0, Math.PI * 2);
+      ctx.fillStyle = i < lives ? "#4af" : "rgba(255,255,255,0.12)";
+      ctx.fill();
+    }
+  }
+
+  // ─── SHIELD ──────────────────────────────────────────────────────────────────
+  function drawShield() {
+    const startA = shieldAngle - SHIELD_ARC / 2;
+    const endA   = shieldAngle + SHIELD_ARC / 2;
+
+    // Outer glow pass
+    ctx.beginPath();
+    ctx.arc(cx, cy, SHIELD_ORBIT_RADIUS, startA, endA);
+    ctx.strokeStyle = "rgba(0,230,255,0.18)";
+    ctx.lineWidth   = SHIELD_WIDTH + 10;
+    ctx.lineCap     = "round";
+    ctx.stroke();
+
+    // Main arc
+    ctx.beginPath();
+    ctx.arc(cx, cy, SHIELD_ORBIT_RADIUS, startA, endA);
+    const grad = ctx.createLinearGradient(
+      cx + Math.cos(startA) * SHIELD_ORBIT_RADIUS, cy + Math.sin(startA) * SHIELD_ORBIT_RADIUS,
+      cx + Math.cos(endA)   * SHIELD_ORBIT_RADIUS, cy + Math.sin(endA)   * SHIELD_ORBIT_RADIUS
+    );
+    grad.addColorStop(0,   "rgba(0,200,255,0.5)");
+    grad.addColorStop(0.5, "rgba(100,240,255,1.0)");
+    grad.addColorStop(1,   "rgba(0,200,255,0.5)");
+    ctx.strokeStyle = grad;
+    ctx.lineWidth   = SHIELD_WIDTH;
+    ctx.stroke();
+
+    // Inner bright core
+    ctx.beginPath();
+    ctx.arc(cx, cy, SHIELD_ORBIT_RADIUS, startA, endA);
+    ctx.strokeStyle = "rgba(200,255,255,0.7)";
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+  }
+
+  // ─── ASTEROIDS ───────────────────────────────────────────────────────────────
+  function drawAsteroids() {
+    for (const a of asteroids) {
+      ctx.save();
+      ctx.translate(a.x, a.y);
+      ctx.rotate(a.rot);
+
+      // Rocky body
+      ctx.beginPath();
+      ctx.moveTo(a.pts[0].x, a.pts[0].y);
+      for (let i = 1; i < a.pts.length; i++) ctx.lineTo(a.pts[i].x, a.pts[i].y);
+      ctx.closePath();
+
+      const rg = ctx.createRadialGradient(0, -a.radius * 0.3, 2, 0, 0, a.radius);
+      rg.addColorStop(0,   "#b8a898");
+      rg.addColorStop(0.5, "#786858");
+      rg.addColorStop(1,   "#3a2e28");
+      ctx.fillStyle = rg;
+      ctx.fill();
+
+      ctx.strokeStyle = "#5a4a3a";
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+  }
+
+  // ─── PARTICLES ───────────────────────────────────────────────────────────────
+  function drawParticles() {
+    for (const p of particles) {
+      const alpha = p.life / p.maxLife;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * alpha, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = alpha;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // ─── HUD ─────────────────────────────────────────────────────────────────────
+  function drawHUD() {
+    // Score
+    ctx.font      = `bold ${Math.round(W * 0.026)}px ${HUD_FONT}`;
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.fillText(`SCORE  ${score}`, W * 0.03, H * 0.07);
+
+    ctx.font      = `${Math.round(W * 0.018)}px ${HUD_FONT}`;
+    ctx.fillStyle = "#00eeff";
+    ctx.fillText(`KILLS  ${kills}`, W * 0.03, H * 0.12);
+
+    // Wave info (speed ramp)
+    const wave = Math.floor(kills / SPEED_RAMP_INTERVAL) + 1;
+    ctx.fillStyle = "#aaa";
+    ctx.fillText(`WAVE   ${wave}`, W * 0.03, H * 0.165);
+  }
+
+  // ─── SCREENS ─────────────────────────────────────────────────────────────────
+  function drawIdle() {
+    // Backdrop
+    ctx.fillStyle = "rgba(6,5,15,0.75)";
+    ctx.fillRect(0, 0, W, H);
+
+    const titleSize = Math.round(W * 0.065);
+    ctx.textAlign   = "center";
+
+    // Title
+    ctx.font      = `900 ${titleSize}px ${HUD_FONT}`;
+    ctx.fillStyle = "#00eeff";
+    ctx.shadowColor = "#00eeff";
+    ctx.shadowBlur  = 18;
+    ctx.fillText("ORBITAL DEFENSE", cx, cy - H * 0.14);
+    ctx.shadowBlur = 0;
+
+    // Subtitle
+    ctx.font      = `bold ${Math.round(W * 0.022)}px ${HUD_FONT}`;
+    ctx.fillStyle = "#8899bb";
+    ctx.fillText("Protect the planet. Destroy all asteroids.", cx, cy - H * 0.06);
+
+    // Instructions box
+    const bw = W * 0.52, bh = H * 0.22;
+    const bx = cx - bw / 2, by = cy - H * 0.01;
+    ctx.fillStyle   = "rgba(0,10,30,0.6)";
+    ctx.strokeStyle = "rgba(0,200,255,0.3)";
+    ctx.lineWidth   = 1;
+    roundRect(bx, by, bw, bh, 10);
+
+    ctx.font      = `bold ${Math.round(W * 0.019)}px ${HUD_FONT}`;
+    ctx.fillStyle = "#ccddff";
+    ctx.textAlign = "center";
+    ctx.fillText("Move mouse / finger  →  Rotate shield", cx, by + bh * 0.38);
+    ctx.fillText("3 hits to the planet  =  GAME OVER",    cx, by + bh * 0.7);
+
+    // CTA
+    const pulse = 0.8 + 0.2 * Math.sin(frame * 0.08);
+    ctx.font      = `900 ${Math.round(W * 0.032)}px ${HUD_FONT}`;
+    ctx.fillStyle = `rgba(0,238,255,${pulse.toFixed(2)})`;
+    ctx.shadowColor = "#00eeff";
+    ctx.shadowBlur  = 12;
+    ctx.fillText("CLICK / TAP TO START", cx, cy + H * 0.32);
+    ctx.shadowBlur = 0;
+  }
+
+  function drawGameOver() {
+    ctx.fillStyle = "rgba(6,5,15,0.8)";
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.textAlign = "center";
+
+    ctx.font      = `900 ${Math.round(W * 0.07)}px ${HUD_FONT}`;
+    ctx.fillStyle = "#ff3344";
+    ctx.shadowColor = "#ff0022";
+    ctx.shadowBlur  = 20;
+    ctx.fillText("GAME OVER", cx, cy - H * 0.12);
+    ctx.shadowBlur = 0;
+
+    ctx.font      = `bold ${Math.round(W * 0.038)}px ${HUD_FONT}`;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(`FINAL SCORE:  ${score}`, cx, cy + H * 0.02);
+
+    ctx.font      = `bold ${Math.round(W * 0.022)}px ${HUD_FONT}`;
+    ctx.fillStyle = "#00eeff";
+    ctx.fillText(`Asteroids Destroyed: ${kills}`, cx, cy + H * 0.1);
+
+    const pulse = 0.8 + 0.2 * Math.sin(frame * 0.1);
+    ctx.font      = `bold ${Math.round(W * 0.026)}px ${HUD_FONT}`;
+    ctx.fillStyle = `rgba(255,200,80,${pulse.toFixed(2)})`;
+    ctx.fillText("CLICK / TAP TO RETRY", cx, cy + H * 0.24);
+  }
+
+  // ─── UTILS ───────────────────────────────────────────────────────────────────
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // ─── GAME LOOP ───────────────────────────────────────────────────────────────
+  function loop(ts) {
+    const dt = Math.min((ts - lastTime) / (1000 / 60), 3); // cap at 3x
+    lastTime = ts;
+
+    if (gameState === "playing") update(dt);
+    draw();
+
+    animId = requestAnimationFrame(loop);
+  }
+
+  // ─── BOOT ────────────────────────────────────────────────────────────────────
+  window.addEventListener("DOMContentLoaded", init);
+  // Fallback if DOMContentLoaded already fired (iframe load)
+  if (document.readyState !== "loading") init();
+
+})();
+</script>
+</body>
+</html>

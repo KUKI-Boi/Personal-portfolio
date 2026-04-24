@@ -15,7 +15,6 @@ import ContactApp from "../apps/ContactApp";
 import SkillsApp from "../apps/SkillsApp";
 import PlayApp from "../apps/PlayApp";
 import ExperienceApp from "../apps/ExperienceApp";
-import VolunteeringApp from "../apps/VolunteeringApp";
 
 import {
     User,
@@ -24,14 +23,13 @@ import {
     Mail,
     Terminal,
     Gamepad,
-    Zap,
     Search,
     Sun,
     Moon,
     Briefcase
 } from "lucide-react";
 
-export type AppId = "about" | "projects" | "contact" | "skills" | "volunteering" | "experience" | "play";
+export type AppId = "about" | "projects" | "contact" | "skills" | "experience" | "play";
 
 export interface AppConfig {
     id: AppId;
@@ -43,9 +41,8 @@ export const APPS: AppConfig[] = [
     { id: "about", label: "About", icon: <User size={24} /> },
     { id: "projects", label: "Projects", icon: <Folder size={24} /> },
     { id: "skills", label: "Skills", icon: <Cpu size={24} /> },
-    { id: "contact", label: "Contact", icon: <Mail size={24} /> },
     { id: "experience", label: "Experience", icon: <Briefcase size={24} /> },
-    { id: "volunteering", label: "Outreach", icon: <Zap size={24} /> },
+    { id: "contact", label: "Contact", icon: <Mail size={24} /> },
     { id: "play", label: "Play", icon: <Gamepad size={24} /> },
 ];
 
@@ -219,46 +216,89 @@ export default function Desktop() {
 
             {/* Top-Left Identity Section */}
             <div className="relative z-10 flex flex-col items-start justify-start h-full px-8 md:px-16 pt-32 md:pt-40 pointer-events-none">
+                {/* Hero blob */}
+                <div className="hero-blob" style={{ left: '-60px', top: '60px' }} />
+
                 {/* Minimalist Hero */}
                 <div className="max-w-4xl w-full flex flex-col items-start gap-6 pointer-events-auto">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="relative"
-                    >
-                        <h1 className="text-[14vw] sm:text-[10vw] md:text-[8vw] font-black leading-[0.8] tracking-tighter select-none flex flex-col items-start transition-colors duration-500">
-                            <span className="text-[var(--foreground)]">LIKITH</span>
-                            <span className="text-[var(--accent)]">KUMAR</span>
-                        </h1>
-                    </motion.div>
+                    {/* Staggered letter-by-letter name reveal */}
+                    <div className="overflow-hidden">
+                        <motion.h1
+                            className="text-[14vw] sm:text-[10vw] md:text-[8vw] font-black leading-[0.8] tracking-tighter select-none flex flex-col items-start transition-colors duration-500"
+                        >
+                            {/* LIKITH — staggered */}
+                            <span className="flex">
+                                {"LIKITH".split("").map((ch, i) => (
+                                    <motion.span
+                                        key={i}
+                                        className="text-[var(--foreground)] inline-block"
+                                        initial={{ opacity: 0, y: 40 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.05 * i, type: "spring", stiffness: 200, damping: 20 }}
+                                    >
+                                        {ch}
+                                    </motion.span>
+                                ))}
+                            </span>
+                            {/* KUMAR — staggered, accent color */}
+                            <span className="flex">
+                                {"KUMAR".split("").map((ch, i) => (
+                                    <motion.span
+                                        key={i}
+                                        className="text-[var(--accent)] inline-block"
+                                        initial={{ opacity: 0, y: 40 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.3 + 0.05 * i, type: "spring", stiffness: 200, damping: 20 }}
+                                    >
+                                        {ch}
+                                    </motion.span>
+                                ))}
+                            </span>
+                        </motion.h1>
+                    </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="flex flex-col items-start gap-6"
-                    >
+                    <div className="flex flex-col items-start gap-6">
                         <div className="space-y-1 transition-colors duration-500">
-                            <p className="text-[var(--foreground)] text-xl md:text-2xl font-black tracking-tight leading-tight uppercase">
-                                Engineering Ideas with
-                            </p>
-                            <p className="text-[var(--accent)] text-2xl md:text-4xl font-black tracking-tighter leading-tight uppercase">
-                                Passion, Precision and Innovation
-                            </p>
-                        </div>
-
-                        <div className="flex gap-4 flex-wrap">
-                            {["REACT", "NEXT.JS", "PYTHON", "AI/ML", "UI/UX"].map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="px-4 py-1.5 border border-[var(--muted)]/20 bg-[var(--card)]/40 backdrop-blur-md rounded-full text-[10px] font-black tracking-widest text-[var(--muted)] transition-all duration-500"
+                            {[
+                                { text: "Engineering Ideas with", cls: "text-[var(--foreground)] text-xl md:text-2xl font-black tracking-tight leading-tight uppercase", delay: 0.55 },
+                                { text: "Passion, Precision", cls: "text-[var(--accent)] text-2xl md:text-4xl font-black tracking-tighter leading-tight uppercase", delay: 0.75 },
+                                { text: "and Innovation", cls: "text-[var(--accent)] text-2xl md:text-4xl font-black tracking-tighter leading-tight uppercase blink-cursor", delay: 0.95 },
+                            ].map(({ text, cls, delay }) => (
+                                <motion.p
+                                    key={text}
+                                    className={cls}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay, duration: 0.5, ease: "easeOut" }}
                                 >
-                                    {tag}
-                                </span>
+                                    {text}
+                                </motion.p>
                             ))}
                         </div>
-                    </motion.div>
+
+                        {/* Skill tags with brand color glow */}
+                        <motion.div
+                            className="flex gap-3 flex-wrap"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.1, duration: 0.4 }}
+                        >
+                            {([
+                                { label: "REACT",   cls: "skill-tag-react" },
+                                { label: "NEXT.JS", cls: "skill-tag-nextjs" },
+                                { label: "PYTHON",  cls: "skill-tag-python" },
+                                { label: "AI/ML",   cls: "skill-tag-aiml" },
+                                { label: "UI/UX",   cls: "skill-tag-uiux" },
+                            ] as { label: string; cls: string }[]).map(({ label, cls }) => (
+                                <span
+                                    key={label}
+                                    className={`${cls} px-4 py-1.5 border border-[var(--muted)]/20 bg-[var(--card)]/40 backdrop-blur-md rounded-full text-[10px] font-black tracking-widest text-[var(--muted)] transition-all duration-200 cursor-pointer`}
+                                >
+                                    {label}
+                                </span>
+                            ))}
+                        </motion.div>
+                    </div>
                 </div>
             </div>
 
@@ -290,7 +330,6 @@ export default function Desktop() {
                                 {appId === "projects" && <ProjectsApp />}
                                 {appId === "skills" && <SkillsApp />}
                                 {appId === "contact" && <ContactApp />}
-                                {appId === "volunteering" && <VolunteeringApp />}
                                 {appId === "experience" && <ExperienceApp />}
                                 {appId === "play" && <PlayApp onImmersiveChange={setIsImmersive} />}
                             </Window>

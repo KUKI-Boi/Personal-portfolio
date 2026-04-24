@@ -217,3 +217,128 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* ─── Custom Two-Layer Cursor ─────────────────────────────────────────────── */
+* { cursor: none !important; }
+
+#cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: rgba(99, 179, 237, 0.9);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+/* Hide cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  * { cursor: auto !important; }
+  #cursor-dot { display: none; }
+}
+
+/* ─── Skill Tag Brand Glow ────────────────────────────────────────────────── */
+.skill-tag-react:hover    { box-shadow: 0 0 14px #61DAFB; border-color: rgba(97,218,251,0.5) !important; }
+.skill-tag-nextjs:hover   { box-shadow: 0 0 14px rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.4) !important; }
+.skill-tag-python:hover   { box-shadow: 0 0 14px #FFD43B; border-color: rgba(255,212,59,0.5) !important; }
+.skill-tag-aiml:hover     { box-shadow: 0 0 14px #A855F7; border-color: rgba(168,85,247,0.5) !important; }
+.skill-tag-uiux:hover     { box-shadow: 0 0 14px #F472B6; border-color: rgba(244,114,182,0.5) !important; }
+
+/* ─── Blinking cursor ─────────────────────────────────────────────────────── */
+.blink-cursor::after {
+  content: "|";
+  animation: blink 1s step-end infinite;
+  color: var(--accent);
+  margin-left: 2px;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ─── Hero blob gradient ──────────────────────────────────────────────────── */
+.hero-blob {
+  position: absolute;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,179,237,0.18) 0%, rgba(168,85,247,0.10) 50%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  animation: blob-drift 8s ease-in-out infinite alternate;
+}
+@keyframes blob-drift {
+  from { transform: translate(-10%, -10%) scale(1); }
+  to   { transform: translate(10%, 10%) scale(1.1); }
+}
+
+/* ─── Section divider ─────────────────────────────────────────────────────── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
+  margin: 2rem 0;
+}
+
+/* ─── Project card enhanced hover ────────────────────────────────────────── */
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.project-card:hover {
+  border-color: rgba(99,179,237,0.35);
+  box-shadow: 0 0 30px rgba(99,179,237,0.08);
+  transform: translateY(-4px);
+}
+
+/* ─── Dock Play badge glow ────────────────────────────────────────────────── */
+.dock-play-badge {
+  border: 1px solid rgba(99,179,237,0.4);
+  background: rgba(99,179,237,0.08);
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(99,179,237,0.15);
+}
+
+/* ─── Stat cards count-up ────────────────────────────────────────────────── */
+.stat-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover {
+  border-color: rgba(99,179,237,0.3);
+  box-shadow: 0 0 20px rgba(99,179,237,0.07);
+}
+
+/* ─── Blockquote styling ──────────────────────────────────────────────────── */
+.portfolio-blockquote {
+  border-left: 3px solid rgba(99,179,237,0.7);
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* ─── Skill icon brand hover glows ───────────────────────────────────────── */
+.skill-icon-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.skill-icon-card:hover { transform: translateY(-4px) scale(1.08); }
+
+/* Dark SVG icons (Next.js, Three.js) — invert to white in dark mode only */
+.icon-invert {
+  filter: invert(1) brightness(2);
+}
+/* In light mode, keep them dark so they're visible on light background */
+.theme-light .icon-invert {
+  filter: invert(0);
+}
+
+/* ─── Reduced Motion ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero-blob { animation: none; }
+  .blink-cursor::after { animation: none; opacity: 1; }
+}
