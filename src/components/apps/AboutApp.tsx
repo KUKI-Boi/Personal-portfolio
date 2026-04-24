@@ -48,7 +48,7 @@ export default function AboutApp() {
             variants={container}
             initial="hidden"
             animate="show"
-            className="space-y-10 md:space-y-14"
+            className="pb-32 space-y-10 md:space-y-14"
         >
             {/* Intro */}
             <motion.div variants={item} className="space-y-6">
@@ -104,45 +104,8 @@ export default function AboutApp() {
 
             <div className="section-divider" />
 
-            {/* My Journey */}
-            <motion.div variants={item} className="space-y-6">
-                <h3 className="text-2xl font-black uppercase tracking-tighter text-[var(--foreground)]">My Journey</h3>
-
-                {/* Styled blockquote */}
-                <blockquote className="portfolio-blockquote text-base md:text-lg leading-relaxed max-w-4xl">
-                    &ldquo;I swear I didn&apos;t use AI to build this&rdquo;
-                </blockquote>
-
-                <div className="border-l-2 border-[var(--muted)]/20 pl-8 space-y-5 text-[var(--muted)] font-medium leading-relaxed max-w-4xl">
-                    <p>
-                        I am currently pursuing my{" "}
-                        <span className="text-[var(--foreground)] font-black">
-                            B.Tech in Electrical and Electronics Engineering (EEE)
-                        </span>
-                        , driven by a strong curiosity for how systems work at both the hardware and logical levels. My academic journey has given me a solid foundation in{" "}
-                        <span className="text-[var(--foreground)] font-black">
-                            electrical systems, electronics, and problem-solving
-                        </span>.
-                    </p>
-                    <p>
-                        Alongside my core EEE studies, I actively explore{" "}
-                        <span className="text-[var(--foreground)] font-black">
-                            computer science and software development
-                        </span>
-                        , focusing on{" "}
-                        <span className="text-[var(--foreground)] font-black">programming.</span>
-                    </p>
-                    <p>
-                        I enjoy learning technologies that challenge conventional thinking and help me build efficient, real-world solutions at the intersection of{" "}
-                        <span className="text-[var(--foreground)] font-black">electronics and software</span>.
-                    </p>
-                </div>
-            </motion.div>
-
-            <div className="section-divider" />
-
             {/* Beyond */}
-            <motion.div variants={item} className="space-y-6 pb-12">
+            <motion.div variants={item} className="space-y-6 pb-32">
                 <h3 className="text-2xl font-black uppercase tracking-tighter text-[var(--foreground)]">Beyond</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {[

@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 
 /**
- * CustomCursor — Simple instant dot cursor.
- * Hidden on touch/mobile devices via CSS media query.
+ * CustomCursor — A soft glowing aura that follows the default system pointer.
+ * The aura has a subtle "organic lag" (lerp) as its unique property.
  */
 export default function CustomCursor() {
     const dotRef = useRef<HTMLDivElement>(null);
@@ -13,16 +13,35 @@ export default function CustomCursor() {
         const dot = dotRef.current;
         if (!dot) return;
 
+        let rafId: number;
+        let mouseX = -100;
+        let mouseY = -100;
+        let auraX = -100;
+        let auraY = -100;
+
         const onMove = (e: MouseEvent) => {
-            // Dot follows instantly
-            dot.style.left = `${e.clientX}px`;
-            dot.style.top  = `${e.clientY}px`;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        };
+
+        const animate = () => {
+            // Unique property: Organic lag/trailing effect
+            const lerpFactor = 0.15;
+            auraX += (mouseX - auraX) * lerpFactor;
+            auraY += (mouseY - auraY) * lerpFactor;
+
+            dot.style.left = `${auraX}px`;
+            dot.style.top  = `${auraY}px`;
+
+            rafId = requestAnimationFrame(animate);
         };
 
         window.addEventListener("mousemove", onMove);
+        rafId = requestAnimationFrame(animate);
 
         return () => {
             window.removeEventListener("mousemove", onMove);
+            cancelAnimationFrame(rafId);
         };
     }, []);
 

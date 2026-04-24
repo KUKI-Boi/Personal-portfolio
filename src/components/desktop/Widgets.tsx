@@ -35,25 +35,7 @@ export function CalendarWidget() {
     );
 }
 
-/**
- * InfoWidget
- * "Life in a Nutshell" style text card.
- */
-export function InfoWidget() {
-    return (
-        <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="w-64 p-6 bg-[#25295A]/60 backdrop-blur-xl border border-[#B8B9E6]/10 rounded-3xl space-y-4 shadow-2xl"
-        >
-            <h3 className="text-[#B8B9E6]/40 text-[10px] font-black uppercase tracking-[0.2em]">My Life in a Nutshell</h3>
-            <p className="text-[#E6E6F0] text-lg font-black leading-tight">
-                &quot;I swear I didn&apos;t use <span className="text-[#F4A261]">AI</span> to build this&quot;
-            </p>
-        </motion.div>
-    );
-}
+
 
 /**
  * MusicWidget

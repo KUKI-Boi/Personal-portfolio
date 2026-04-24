@@ -57,7 +57,7 @@ const item = {
 
 export default function SkillsApp() {
     return (
-        <div className="space-y-10 md:space-y-14 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="pb-32 space-y-10 md:space-y-14 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="text-center space-y-2">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-[var(--foreground)]">Skills &amp; Technologies</h2>
                 <p className="text-[var(--muted)] text-sm font-black uppercase tracking-widest">Technologies and tools I work with</p>
@@ -103,11 +103,9 @@ export default function SkillsApp() {
 
             <div className="section-divider" />
 
-            <div className="pt-4 flex flex-wrap justify-between gap-8 opacity-50">
-                <div className="flex items-center gap-2 text-[10px] font-black uppercase text-[var(--muted)]"><Cpu size={14} /> Embedded</div>
+            <div className="pt-4 flex flex-wrap justify-center gap-12 opacity-50">
                 <div className="flex items-center gap-2 text-[10px] font-black uppercase text-[var(--muted)]"><Globe size={14} /> Web</div>
                 <div className="flex items-center gap-2 text-[10px] font-black uppercase text-[var(--muted)]"><Terminal size={14} /> Automation</div>
-                <div className="flex items-center gap-2 text-[10px] font-black uppercase text-[var(--muted)]"><Layers size={14} /> Design Systems</div>
             </div>
         </div>
     );

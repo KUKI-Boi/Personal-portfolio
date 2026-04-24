@@ -5,8 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Window from "./Window";
 import Dock from "./Dock";
 import VantaBackground from "./VantaBackground";
-import CosmicBackground from "./CosmicBackground";
-import { CalendarWidget, InfoWidget } from "./Widgets";
+import NewspaperAccordion from "./NewspaperAccordion";
+import { CalendarWidget } from "./Widgets";
 
 // App Content Components
 import AboutApp from "../apps/AboutApp";
@@ -302,10 +302,12 @@ export default function Desktop() {
                 </div>
             </div>
 
-            {/* Widgets */}
-            <div className="fixed top-24 right-4 md:right-8 hidden lg:flex flex-col gap-6 z-[5]">
-                <InfoWidget />
-                <CalendarWidget />
+            {/* Top-Right Widgets */}
+            <div className="fixed top-24 right-4 md:right-8 hidden lg:flex flex-col gap-4 z-[5] max-w-[340px] w-full pointer-events-auto">
+                <NewspaperAccordion onContactClick={() => openApp('contact')} />
+                <div className="px-2">
+                    <CalendarWidget />
+                </div>
             </div>
 
             {/* Windows Layer */}

@@ -49,7 +49,7 @@ const cardVariant = {
 
 export default function ProjectsApp() {
     return (
-        <div className="space-y-10 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="pb-32 space-y-10 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="text-center space-y-2">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-[var(--foreground)]">Showcasing My Work</h2>
                 <p className="text-[var(--muted)] text-sm font-black uppercase tracking-widest">A showcase of my recent work and side projects</p>
