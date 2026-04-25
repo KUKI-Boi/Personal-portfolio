@@ -63,17 +63,11 @@ export default function Desktop() {
     const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const mountTimer = setTimeout(() => {
-            setMounted(true);
-            const savedTheme = localStorage.getItem('portfolio-theme') as 'dark' | 'light';
-            if (savedTheme) setTheme(savedTheme);
-        }, 0);
-
+        setMounted(true);
         const clockTimer = setInterval(() => {
             setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
         }, 1000);
         return () => {
-            clearTimeout(mountTimer);
             clearInterval(clockTimer);
         };
     }, []);
