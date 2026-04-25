@@ -1,6 +1,6 @@
 "use client";
 
-import { Briefcase, MapPin, Calendar, Award, Zap } from "lucide-react";
+import { Briefcase, MapPin, Calendar, Award, Zap, ExternalLink } from "lucide-react";
 
 const EXPERIENCES = [
     {
@@ -9,7 +9,8 @@ const EXPERIENCES = [
         duration: "2024 – Present",
         location: "Autonomous Systems",
         icon: <Zap size={20} />,
-        description: "Driving innovation in electric mobility and intelligent systems. Leading product strategy and hardware-software integration for autonomous solutions."
+        description: "Driving innovation in electric mobility and intelligent systems. Leading product strategy and hardware-software integration for autonomous solutions.",
+        link: "https://www.linkedin.com/company/verblynlabs/?viewAsMember=true"
     },
     {
         title: "Webmaster",
@@ -48,7 +49,14 @@ export default function ExperienceApp() {
                                     {exp.icon} {exp.title}
                                 </div>
                                 <h3 className="text-3xl font-black text-[var(--foreground)] uppercase tracking-tighter leading-tight">
-                                    {exp.company}
+                                    {exp.link ? (
+                                        <a href={exp.link} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors inline-flex items-center gap-3">
+                                            {exp.company}
+                                            <ExternalLink size={20} className="opacity-50" />
+                                        </a>
+                                    ) : (
+                                        exp.company
+                                    )}
                                 </h3>
 
                                 <div className="flex flex-wrap gap-6 pt-2">
@@ -69,18 +77,26 @@ export default function ExperienceApp() {
                 ))}
 
                 {/* Achievement Highlight */}
-                <div className="flex items-center gap-8 p-8 cosmic-glass rounded-[30px] border border-[var(--accent)]/20 shadow-[0_0_50px_rgba(244,162,97,0.05)] transition-all">
-                    <div className="w-16 h-16 rounded-2xl bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent)] shrink-0">
+                <a 
+                    href="https://www.linkedin.com/feed/update/urn:li:activity:7411270046087475200/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-8 p-8 cosmic-glass rounded-[30px] border border-[var(--accent)]/20 shadow-[0_0_50px_rgba(244,162,97,0.05)] transition-all hover:scale-[1.02] hover:border-[var(--accent)]/50 group block cursor-pointer"
+                >
+                    <div className="w-16 h-16 rounded-2xl bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent)] shrink-0 group-hover:bg-[var(--accent)]/20 transition-colors">
                         <Award size={40} />
                     </div>
                     <div className="space-y-1">
                         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--accent)]">Achievement</span>
-                        <h4 className="text-xl font-black text-[var(--foreground)] uppercase tracking-tighter">Hackathon Winner — 2025</h4>
+                        <h4 className="text-xl font-black text-[var(--foreground)] uppercase tracking-tighter flex items-center gap-2 group-hover:text-[var(--accent)] transition-colors">
+                            Hackathon Winner — 2025
+                            <ExternalLink size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </h4>
                         <p className="text-xs font-black text-[var(--muted)] uppercase tracking-widest">
                             Recognized for developing high-impact engineering solutions.
                         </p>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     );

@@ -284,11 +284,11 @@ export default function Desktop() {
                             transition={{ delay: 1.1, duration: 0.4 }}
                         >
                             {([
-                                { label: "REACT",   cls: "skill-tag-react" },
+                                { label: "REACT", cls: "skill-tag-react" },
                                 { label: "NEXT.JS", cls: "skill-tag-nextjs" },
-                                { label: "PYTHON",  cls: "skill-tag-python" },
-                                { label: "AI/ML",   cls: "skill-tag-aiml" },
-                                { label: "UI/UX",   cls: "skill-tag-uiux" },
+                                { label: "PYTHON", cls: "skill-tag-python" },
+                                { label: "AI/ML", cls: "skill-tag-aiml" },
+                                { label: "UI/UX", cls: "skill-tag-uiux" },
                             ] as { label: string; cls: string }[]).map(({ label, cls }) => (
                                 <span
                                     key={label}

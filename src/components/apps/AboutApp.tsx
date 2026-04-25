@@ -74,10 +74,15 @@ export default function AboutApp() {
                 </p>
 
                 <div className="flex flex-wrap items-center gap-6 pt-2">
-                    <button className="px-8 py-3 cosmic-glass cosmic-button text-[10px] font-black uppercase tracking-widest rounded-full transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(244,162,97,0.2)]">
+                    <a 
+                        href="/Likith_Kumar_Resume.pdf" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-8 py-3 cosmic-glass cosmic-button text-[10px] font-black uppercase tracking-widest rounded-full transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(244,162,97,0.2)]"
+                    >
                         <Download size={14} className="relative z-10" />
-                        <span className="relative z-10">Download CV</span>
-                    </button>
+                        <span className="relative z-10">Resume</span>
+                    </a>
                     <a
                         href="mailto:likithkumarbm@gmail.com"
                         className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors text-xs font-black flex items-center gap-2 border-b border-transparent hover:border-[var(--accent)] pb-0.5"
