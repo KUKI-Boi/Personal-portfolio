@@ -26,11 +26,11 @@ const oldStandard = Old_Standard_TT({
 });
 
 export const metadata: Metadata = {
-  title: "Likith Kumar — EEE Engineer & Builder",
+  title: "LK",
   description:
     "Portfolio of Likith Kumar — Electrical & Electronics Engineer, building with React, Next.js, Python and AI/ML.",
   openGraph: {
-    title: "Likith Kumar — EEE Engineer & Builder",
+    title: "LK",
     description:
       "Portfolio of Likith Kumar — Electrical & Electronics Engineer, building with React, Next.js, Python and AI/ML.",
     url: "https://kuki-boi.github.io/Personal-portfolio/",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Likith Kumar — EEE Engineer & Builder",
+    title: "LK",
     description:
       "Portfolio of Likith Kumar — Electrical & Electronics Engineer, building with React, Next.js, Python and AI/ML.",
   },
