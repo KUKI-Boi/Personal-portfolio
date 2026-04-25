@@ -75,7 +75,7 @@ export default function AboutApp({ onContactClick }: { onContactClick?: () => vo
 
                 <div className="flex flex-wrap items-center gap-6 pt-2">
                     <a 
-                        href="/Likith_Kumar_Resume.pdf" 
+                        href="./Likith_Kumar_Resume.pdf" 
                         target="_blank"
                         rel="noopener noreferrer"
                         download="Likith_Kumar_Resume.pdf"

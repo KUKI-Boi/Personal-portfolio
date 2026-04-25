@@ -35,7 +35,7 @@ export default function PlayApp({ onImmersiveChange }: PlayAppProps) {
             {/* Game iframe — fills all remaining space */}
             <iframe
                 ref={iframeRef}
-                src="/orbital-defense.html"
+                src="./orbital-defense.html"
                 title="Orbital Defense Game"
                 className="flex-1 w-full border-none"
                 style={{ background: "#06050f" }}
