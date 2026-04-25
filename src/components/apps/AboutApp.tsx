@@ -42,7 +42,7 @@ const item = {
 /**
  * AboutApp component — upgraded with stat cards, blockquote, and stagger animations.
  */
-export default function AboutApp() {
+export default function AboutApp({ onContactClick }: { onContactClick?: () => void }) {
     return (
         <motion.div
             variants={container}
@@ -78,17 +78,18 @@ export default function AboutApp() {
                         href="/Likith_Kumar_Resume.pdf" 
                         target="_blank"
                         rel="noopener noreferrer"
+                        download="Likith_Kumar_Resume.pdf"
                         className="px-8 py-3 cosmic-glass cosmic-button text-[10px] font-black uppercase tracking-widest rounded-full transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(244,162,97,0.2)]"
                     >
                         <Download size={14} className="relative z-10" />
                         <span className="relative z-10">Resume</span>
                     </a>
-                    <a
-                        href="mailto:likithkumarbm@gmail.com"
-                        className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors text-xs font-black flex items-center gap-2 border-b border-transparent hover:border-[var(--accent)] pb-0.5"
+                    <button
+                        onClick={onContactClick}
+                        className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors text-xs font-black flex items-center gap-2 border-b border-transparent hover:border-[var(--accent)] pb-0.5 cursor-pointer"
                     >
                         <Mail size={16} /> likithkumarbm@gmail.com
-                    </a>
+                    </button>
                 </div>
             </motion.div>
 

@@ -328,7 +328,7 @@ export default function Desktop() {
                                 onMaximize={() => toggleMaximize(appId)}
                                 onPointerDown={() => focusApp(appId)}
                             >
-                                {appId === "about" && <AboutApp />}
+                                {appId === "about" && <AboutApp onContactClick={() => openApp('contact')} />}
                                 {appId === "projects" && <ProjectsApp />}
                                 {appId === "skills" && <SkillsApp />}
                                 {appId === "contact" && <ContactApp />}

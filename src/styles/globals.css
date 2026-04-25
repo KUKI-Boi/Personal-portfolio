@@ -81,54 +81,48 @@
 }
 
 .theme-light {
-  --background: #F8F9FD;
-  --foreground: #1B1F4A;
-  /* Deepest Indigo */
-  --muted: #565B94;
-  /* Significantly darker for readability */
-  --accent: #8B4513;
-  /* Darker accent for contrast */
-  --accent-hover: #654321;
-  --heading: #1B1F4A;
+  --background: #EAE7DC;
+  --foreground: #4A4A4A; /* Darker tone for readable text */
+  --muted: #8E8D8A;
+  --accent: #E85A4F;
+  --accent-hover: #E98074;
+  --heading: #E85A4F;
 
-  --card: #E8EAF6;
-  /* More distinct from background */
-  --card-foreground: #1B1F4A;
-  --border: #D1D5F0;
-  /* Visible borders */
-  --header-bg: rgba(232, 234, 246, 0.95);
-  /* Increased opacity */
-  --selection-bg: rgba(139, 69, 19, 0.2);
+  --card: #D8C3A5;
+  --card-foreground: #4A4A4A;
+  --border: rgba(142, 141, 138, 0.3); /* #8E8D8A with opacity */
+  --header-bg: rgba(234, 231, 220, 0.95); /* #EAE7DC with opacity */
+  --selection-bg: rgba(232, 90, 79, 0.2); /* #E85A4F with opacity */
 }
 
 /* Light Theme Overrides for Cosmic Components */
 .theme-light .cosmic-glass {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(232, 234, 246, 0.85) 100%);
-  border: 1px solid rgba(86, 91, 148, 0.2);
+  background: linear-gradient(135deg, rgba(234, 231, 220, 0.6) 0%, rgba(216, 195, 165, 0.85) 100%);
+  border: 1px solid rgba(142, 141, 138, 0.2);
   box-shadow:
-    0 8px 32px -4px rgba(0, 0, 0, 0.1),
-    inset 0 0 16px rgba(255, 255, 255, 0.5);
+    0 8px 32px -4px rgba(0, 0, 0, 0.05),
+    inset 0 0 16px rgba(255, 255, 255, 0.3);
 }
 
 .theme-light .cosmic-glass::before {
-  opacity: 0.15;
+  opacity: 0.1;
   background-image:
-    radial-gradient(1px 1px at 10% 20%, #1B1F4A, transparent),
-    radial-gradient(1px 1px at 30% 50%, #1B1F4A, transparent),
-    radial-gradient(1.5px 1.5px at 50% 10%, #1B1F4A, transparent),
-    radial-gradient(1px 1px at 70% 80%, #1B1F4A, transparent),
-    radial-gradient(1.5px 1.5px at 90% 40%, #1B1F4A, transparent),
-    radial-gradient(1px 1px at 25% 75%, #1B1F4A, transparent),
-    radial-gradient(1px 1px at 85% 15%, #1B1F4A, transparent);
+    radial-gradient(1px 1px at 10% 20%, #8E8D8A, transparent),
+    radial-gradient(1px 1px at 30% 50%, #8E8D8A, transparent),
+    radial-gradient(1.5px 1.5px at 50% 10%, #8E8D8A, transparent),
+    radial-gradient(1px 1px at 70% 80%, #8E8D8A, transparent),
+    radial-gradient(1.5px 1.5px at 90% 40%, #8E8D8A, transparent),
+    radial-gradient(1px 1px at 25% 75%, #8E8D8A, transparent),
+    radial-gradient(1px 1px at 85% 15%, #8E8D8A, transparent);
 }
 
 .theme-light .cosmic-button {
-  color: var(--muted);
+  color: var(--foreground);
 }
 
 .theme-light .cosmic-button:hover {
-  color: var(--foreground);
-  filter: drop-shadow(0 0 10px rgba(27, 31, 74, 0.2));
+  color: var(--accent);
+  filter: drop-shadow(0 0 10px rgba(232, 90, 79, 0.3));
 }
 
 body {
