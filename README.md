@@ -1,49 +1,54 @@
-# Desktop Portfolio
+<div align="center">
 
-A premium, OS-style personal portfolio built with Next.js, TypeScript, and Framer Motion.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=F4A261&height=250&section=header&text=Likith%20Kumar&fontSize=90&fontAlignY=38&desc=Personal%20Portfolio&descAlignY=55&descAlign=62" alt="Header Banner"/>
 
-## Features
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Inter&pause=1000&color=F4A261&center=true&vCenter=true&width=500&lines=Building+intelligent+systems...;Pioneering+electric+mobility...;Welcome+to+my+OS-inspired+portfolio!)](https://git.io/typing-svg)
 
-- **OS-Style Interface**: A unique desktop environment with app icons and windows.
-- **Window Management**: Open multiple windows, switch focus, and close apps seamlessly.
-- **Smooth Animations**: Powered by Framer Motion for window transitions and GSAP for the desktop intro.
-- **Dynamic Taskbar**: Real-time tracking of open apps and system clock.
-- **Premium Aesthetics**: Dark mode by default with glassmorphism and subtle gradients.
+<br/>
+<a href="https://kuki-boi.github.io/Personal-portfolio/" target="_blank">
+  <img src="https://img.shields.io/badge/Live_Portfolio-F4A261?style=for-the-badge&logo=github&logoColor=white" alt="Live Portfolio URL" />
+</a>
 
-## Tech Stack
+</div>
 
-- **Framework**: [Next.js 14+ (App Router)](https://nextjs.org/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
+---
 
-## Getting Started
+## 🌌 About This Project
 
-First, install the dependencies:
+Welcome to the source code of my interactive personal portfolio. Designed to reflect my expertise in **Electrical Engineering** and **Software Development**, this platform bridges high-fidelity aesthetics with an innovative, desktop-OS-like user interface. 
 
-```bash
-npm install
-```
+The application utilizes **Next.js**, **React**, and **Framer Motion** to render a dynamic, window-based environment, featuring draggable app windows, interactive widgets, and an integrated mini-game.
 
-Then, run the development server:
+### ✨ Key Features
+- **OS-Inspired Interface**: A fully interactive desktop environment with a functional dock, Spotlight navigation, and a real-time clock.
+- **Dynamic Environments**: Animated Vanta.js particle backgrounds that react to user interaction.
+- **Interactive Widgets**: Features a custom "Newspaper Accordion" for seamless storytelling and timeline exploration.
+- **Integrated Mini-Game**: Built-in "Orbital Defense" canvas game running natively inside the portfolio.
+- **Theme Engine**: Smooth transitions between a deep Cosmic Dark mode and a Minimal Warm Light mode.
 
-```bash
-npm run dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-## Build for Production
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" />
+</p>
 
-To create an optimized production build:
+---
 
-```bash
-npm run build
-```
+## 🚀 Featured Projects
 
-The build will be available in the `.next` folder.
+- [Altitude Hold Controller](https://github.com/KUKI-Boi/altitude-hold-controller.git)
+- [Solar Battery Charging System](https://github.com/KUKI-Boi/Solar-Battery-Charging-System.git)
+- [Y-bus Matrix Builder](https://github.com/KUKI-Boi/Y-bus-Matrix-Builder.git)
+- [Z-bus Matrix Builder](https://github.com/KUKI-Boi/zbus-matrix-builder.git)
 
-## Author
+---
 
-**Likith** 
+<div align="center">
+  <img src="https://komarev.com/ghpvc/?username=KUKI-Boi&label=Profile%20views&color=F4A261&style=flat" alt="Profile Views" />
+</div>
